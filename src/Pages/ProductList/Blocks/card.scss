@@ -1,0 +1,17 @@
+.card {
+  min-height: 400px;
+  .badge{
+    padding: 10px;
+    font-size: 20px;
+    margin-top: auto;
+    position: absolute;
+    right: 0;
+    opacity: 0.8;
+  }
+  .button_block {
+    button {
+       width: 48%;
+    }
+  }
+}
+
