@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button"
 import {Badge, ListGroup} from "react-bootstrap"
 import {Link, NavLink} from "react-router-dom"
 
-export const CardItem = ({card}) => {
+export const CardItem = ({card, onClick}) => {
   const [isFlipped, changeFlipped] = useState(false)
   const onClickFlip = () => {
     changeFlipped(!isFlipped)
@@ -22,7 +22,7 @@ export const CardItem = ({card}) => {
           <div className='d-flex justify-content-between button_block'>
             <NavLink to={`/catalog/${card.name.replace(/ /g, '-')}`}
                      className='btn btn-info'>More info</NavLink>
-            <Button variant="success" onClick={()=>console.log('click')}>Buy</Button>
+            <Button variant="success" onClick={()=>onClick(card.id)}>Buy</Button>
           </div>
         </Card.Body>
       </Card>
