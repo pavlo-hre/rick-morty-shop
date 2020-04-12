@@ -1,10 +1,9 @@
 import React, {useState} from "react"
-import ReactCardFlip from "react-card-flip";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import './card.scss'
-import {Badge, ListGroup} from "react-bootstrap";
-import {Link, NavLink} from "react-router-dom";
+import ReactCardFlip from "react-card-flip"
+import Card from "react-bootstrap/Card"
+import Button from "react-bootstrap/Button"
+import {Badge, ListGroup} from "react-bootstrap"
+import {Link, NavLink} from "react-router-dom"
 
 export const CardItem = ({card}) => {
   const [isFlipped, changeFlipped] = useState(false)
@@ -14,15 +13,16 @@ export const CardItem = ({card}) => {
 
   return (
     <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-      <Card onClick={onClickFlip} bg={"light"} className={'mb-4 '}>
-        <Card.Img variant="top" src={card.image}/>
+      <Card  bg="secondary" className='mb-4 '>
+        <Card.Img variant="top" src={card.image} onClick={onClickFlip}/>
         <Badge variant={"danger"}>Price: {card.price}</Badge>
         <Card.Body
           className={'d-flex justify-content-between flex-column text-center'}>
-          <Card.Title>{card.name}</Card.Title>
+          <Card.Title className='text-white'>{card.name}</Card.Title>
           <div className='d-flex justify-content-between button_block'>
-            <NavLink to={`/${card.name}`} className='btn btn-info'>More info</NavLink>
-            <Button variant="success">Buy</Button>
+            <NavLink to={`/catalog/${card.name.replace(/ /g, '-')}`}
+                     className='btn btn-info'>More info</NavLink>
+            <Button variant="success" onClick={()=>console.log('click')}>Buy</Button>
           </div>
         </Card.Body>
       </Card>

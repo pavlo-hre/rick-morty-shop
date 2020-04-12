@@ -17,7 +17,7 @@ useEffect(()=>{
     </Col>
   )
   return (
-    <Container bg={'dark'}>
+    <Container>
       <Row xs={1} md={2} lg={3} xl={4}>
       {data.map(el=>renderCards(el))}
       </Row>
