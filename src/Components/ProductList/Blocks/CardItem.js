@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button"
 import {Badge, ListGroup} from "react-bootstrap"
 import {Link, NavLink} from "react-router-dom"
 
-export const CardItem = ({card, onClick}) => {
+const CardItem = ({card, onClickHandler}) => {
   const [isFlipped, changeFlipped] = useState(false)
   const onClickFlip = () => {
     changeFlipped(!isFlipped)
@@ -13,16 +13,19 @@ export const CardItem = ({card, onClick}) => {
 
   return (
     <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-      <Card  bg="secondary" className='mb-4 '>
+      <Card bg="dark" className='mb-4 '>
         <Card.Img variant="top" src={card.image} onClick={onClickFlip}/>
         <Badge variant={"danger"}>Price: {card.price}</Badge>
         <Card.Body
           className={'d-flex justify-content-between flex-column text-center'}>
           <Card.Title className='text-white'>{card.name}</Card.Title>
           <div className='d-flex justify-content-between button_block'>
-            <NavLink to={`/catalog/${card.name.replace(/ /g, '-')}`}
-                     className='btn btn-info'>More info</NavLink>
-            <Button variant="success" onClick={()=>onClick(card.id)}>Buy</Button>
+            <NavLink
+              to={`/product/${card.id}`}
+              className='btn btn-info'
+              onClick={() => onClickHandler(card.id)}
+            >More info</NavLink>
+            <Button variant="success">Buy</Button>
           </div>
         </Card.Body>
       </Card>
@@ -41,5 +44,7 @@ export const CardItem = ({card, onClick}) => {
     </ReactCardFlip>
   )
 }
+
+export default CardItem
 
 

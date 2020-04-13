@@ -9,37 +9,28 @@ import ProductDetails from "./ProductDetails";
 import {Container} from "react-bootstrap";
 import Menu from "./Menu/Menu";
 import axios from "axios";
+import {connect} from "react-redux";
+import {fetchData} from "../Redux/Actions/Product";
 
 
-const App = () => {
-  const [data, setData] = useState([])
-  const [cart, setCart] =useState([])
+const App = props => {
   useEffect(() => {
-    axios.get(`https://rick-morty-3c452.firebaseio.com/heroes.json`)
-      .then(res => res.data['-M4hkpNGoQXhJjS4ymkS'].map(el=>({...el, inCart: 0})))
-      .then(res => setData(res))
-      .catch(e => console.log(e.message))
+    props.fetchData()
   }, [])
-  const onAddToCart = (i) => {
-    const cartData = [...cart, {...data.find(el=>el.id === i), inCart: 1}]
-    setCart(cartData)
-    console.log(cartData)
-  }
   return (
     <Router>
-      <Container fluid className='px-0 bg-light'>
+      <Container fluid className='px-0'>
         <Menu/>
         <Switch>
           <Route path='/' exact>
-            <ProductList data={data} onClick={onAddToCart}/>
+            <ProductList/>
           </Route>
-          <Route path='/catalog/:name' component={ProductDetails}/>
-          <Route path='/news' component={ProductDetails}/>
+          <Route path='/product/:id' render={() => <ProductDetails/>}/>
+          <Route path='/news'/>
         </Switch>
       </Container>
     </Router>
-
   );
 }
 
-export default App;
+export default connect(null, {fetchData})(App)

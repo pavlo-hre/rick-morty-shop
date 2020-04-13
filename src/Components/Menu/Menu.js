@@ -8,7 +8,7 @@ import {NavLink} from "react-router-dom";
 
 const Menu = () => {
   return (
-    <Navbar bg="secondary" expand="lg" className='mb-5 nav-menu '>
+    <Navbar bg="dark" expand="lg" className='mb-5 nav-menu '>
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
