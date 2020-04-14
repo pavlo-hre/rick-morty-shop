@@ -9,19 +9,23 @@ import {
   Row
 } from "react-bootstrap"
 import {connect} from "react-redux"
-import {withRouter} from "react-router-dom"
+import {Link, withRouter} from "react-router-dom"
 import {compose} from "redux"
+import {addToCart} from "../../Redux/Actions/product";
 
-const ProductDetails = ({detailInfo}) => {
+
+const ProductDetails = (props) => {
+  const {detailInfo} = props
   return (
     <Container>
       <Row>
-        <Col>
+        <Col xs={12} md={6} lg={4} className='pb-4 text-center'>
           <Image src={detailInfo.image} rounded/>
         </Col>
         <Col>
-          <Card >
-            <Card.Header className='text-center'><h4>{detailInfo.name}</h4></Card.Header>
+          <Card>
+            <Card.Header className='text-center'><h4>{detailInfo.name}</h4>
+            </Card.Header>
             <ListGroup variant="flush">
               <ListGroup.Item
                 variant="light">Status: <strong>{detailInfo.status}</strong></ListGroup.Item>
@@ -31,10 +35,23 @@ const ProductDetails = ({detailInfo}) => {
                 variant="light">Species: <strong>{detailInfo.species}</strong></ListGroup.Item>
               <ListGroup.Item
                 variant="light">Location: <strong>{detailInfo.location}</strong></ListGroup.Item>
-              <ListGroup.Item className='text-center'
-                variant="danger" >Price: <strong>{detailInfo.price}</strong></ListGroup.Item>
+              <ListGroup.Item
+                variant="light">Price: <strong>{detailInfo.price}</strong></ListGroup.Item>
             </ListGroup>
-            <Button variant='success' className='mt-auto'>Buy now </Button>
+            {detailInfo.inCart
+              ? <Link
+                to='/cart'
+                className='btn btn-warning my-4 w-50 align-self-center'
+              >
+                Go to Cart
+              </Link>
+              :
+              <Button
+                variant="success"
+                className='my-4 w-50 align-self-center'
+                onClick={() => props.addToCart(detailInfo)}
+              >Add to cart</Button>
+            }
           </Card>
         </Col>
       </Row>
@@ -44,4 +61,4 @@ const ProductDetails = ({detailInfo}) => {
 const mapStateToProps = store => ({
   detailInfo: store.product.selected,
 })
-export default compose(connect(mapStateToProps), withRouter)(ProductDetails)
+export default compose(connect(mapStateToProps, {addToCart}), withRouter)(ProductDetails)

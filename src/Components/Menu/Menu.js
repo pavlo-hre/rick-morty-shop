@@ -2,11 +2,12 @@ import React from "react"
 import {
   Navbar,
   Nav,
-  Container
+  Container, Badge
 } from "react-bootstrap";
 import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
 
-const Menu = () => {
+const Menu = props => {
   return (
     <Navbar bg="dark" expand="lg" className='mb-5 nav-menu '>
       <Container>
@@ -18,10 +19,22 @@ const Menu = () => {
             <NavLink to="/news"
                      className='btn btn-link text-white'>News</NavLink>
           </Nav>
-          <NavLink to='/cart' className='btn btn-link text-white'>Cart</NavLink>
+          <NavLink
+            to='/cart'
+            className='btn btn-link text-white cart-link'
+          >
+            Cart
+            <Badge
+              variant='danger'
+            >{props.cartData}</Badge>
+          </NavLink>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   )
 }
-export default Menu
+const mapStateToProps = state => ({
+  cartData: state.product.cart.orders.length
+})
+
+export default connect(mapStateToProps)(Menu)
