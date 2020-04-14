@@ -5,4 +5,6 @@ export const SELECT_ITEM = 'SELECT_ITEM'
 export const ADD_TO_CART = 'ADD_TO_CART'
 export const DEC_CART_ITEM = 'DEC_CART_ITEM'
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM'
+export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const AUTH_LOGOUT = 'AUTH_LOGOUT'
 

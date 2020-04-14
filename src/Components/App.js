@@ -13,6 +13,7 @@ import {fetchData} from "../Redux/Actions/product"
 import Cart from "./Cart/Cart"
 import Auth from "./Auth/Auth";
 import MyModal from "../UI/Modal/Modal";
+import {autoLogin} from "../Redux/Actions/auth";
 
 const App = props => {
   const [modalShow, setModalShow] = React.useState(false)
@@ -25,10 +26,10 @@ const App = props => {
     localStorage.setItem('cart', JSON.stringify(props.cartData))
   }, [props.cartData])
 
-  const submit = values => {
-    // print the form values to the console
-    console.log(values)
-  }
+  useEffect(()=>{
+    props.autoLogin()
+  },[])
+
   return (
     <Router>
       <Container fluid className='px-0'>
@@ -38,7 +39,7 @@ const App = props => {
           onHide={() => setModalShow(false)}
           modaltitle='Log in'
         >
-          <Auth onSubmit={submit}/>
+          <Auth/>
         </MyModal>
         <Switch>
           <Route path='/' exact>
@@ -53,6 +54,7 @@ const App = props => {
   );
 }
 const mapStateToProps = state => ({
-  cartData: state.product.cart.orders
+  cartData: state.product.cart.orders,
+
 })
-export default connect(mapStateToProps, {fetchData})(App)
+export default connect(mapStateToProps, {fetchData, autoLogin})(App)

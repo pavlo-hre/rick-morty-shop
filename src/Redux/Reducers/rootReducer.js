@@ -1,10 +1,10 @@
 import {combineReducers} from "redux"
 import productReducer from "./productReducer"
-import { reducer as formReducer } from 'redux-form'
+import {authReducer} from "./authReducer"
 
 const appRedux = combineReducers({
   product: productReducer,
-  form: formReducer,
+  auth: authReducer,
 })
 
 const reducer = (state, action) => appRedux(state, action)

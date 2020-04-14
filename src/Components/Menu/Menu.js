@@ -2,12 +2,17 @@ import React from "react"
 import {
   Navbar,
   Nav,
-  Container, Badge, Button
+  Container, Badge, Button, Dropdown
 } from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
+import {logOut} from "../../Redux/Actions/auth";
 
 const Menu = props => {
+  if (props.authData.token) {
+    props.modalOpen(false)
+  }
+
   return (
     <Navbar bg="dark" expand="lg" className='mb-5 nav-menu '>
       <Container>
@@ -19,28 +24,48 @@ const Menu = props => {
             <NavLink to="/news"
                      className='btn btn-link text-white'>News</NavLink>
           </Nav>
-          <Button
-            variant={"secondary"}
-            onClick={()=>props.modalOpen(true)}
-          >
-            Login
-          </Button>
           <NavLink
             to='/cart'
-            className='btn btn-link text-white cart-link'
+            className='btn btn-link text-white cart-link mr-3'
           >
             Cart
             <Badge
               variant='danger'
             >{props.cartData}</Badge>
           </NavLink>
+          {props.authData.token
+            ?
+            <>
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="secondary"
+                  id="dropdown-basic">
+                  {props.authData.user}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Button
+                    variant='light'
+                    onClick={props.logOut}
+                  >Log out</Button>
+                </Dropdown.Menu>
+              </Dropdown>
+            </>
+            :
+            <Button
+              variant="secondary"
+              onClick={() => props.modalOpen(true)}
+            >
+              Login
+            </Button>
+          }
         </Navbar.Collapse>
       </Container>
     </Navbar>
   )
 }
 const mapStateToProps = state => ({
-  cartData: state.product.cart.orders.length
+  cartData: state.product.cart.orders.length,
+  authData: state.auth
 })
 
-export default connect(mapStateToProps)(Menu)
+export default connect(mapStateToProps, {logOut})(Menu)
