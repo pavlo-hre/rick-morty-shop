@@ -1,7 +1,7 @@
 import axios from "axios"
 import {AUTH_LOGOUT, AUTH_SUCCESS} from "./actionTypes"
 
-const authSuccess = (token,user) => ({
+const authSuccess = (token, user) => ({
   type: AUTH_SUCCESS,
   token,
   user
@@ -34,25 +34,30 @@ export const autoLogin = () => dispatch => {
     }
   }
 }
-export const auth = (email, password, isLogin) => async (dispatch) => {
+
+export const auth = (email, password, userName, isLogin) => async (dispatch) => {
   const authData = {
     email,
     password,
-    returnSecureToken: true
+    returnSecureToken: true,
   }
-  let loginUrl = isLogin ?
-    `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD42J9iMaQEhmEWDNgsBT1wxJInbKRlMS0`
-    :
-    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD42J9iMaQEhmEWDNgsBT1wxJInbKRlMS0`
+  const key = process.env.REACT_APP_KEY
+  let loginUrl
+  if (isLogin) {
+    loginUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`
+  } else {
+    loginUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`
+    authData.displayName = userName ? userName : email.replace(/@.*/, '')
+  }
+
   try {
     const {data} = await axios
       .post(loginUrl, authData)
     const expDate = new Date(new Date().getTime() + data.expiresIn * 1000)
-    const userName= email.replace(/@.*/, '')
     localStorage.setItem('token', data.idToken)
-    localStorage.setItem('user', userName)
+    localStorage.setItem('user', data.displayName)
     localStorage.setItem('expirationDate', expDate)
-    dispatch(authSuccess(data.idToken, userName))
+    dispatch(authSuccess(data.idToken, data.displayName))
     dispatch(autoLogOut(data.expiresIn))
   } catch (e) {
     console.log(e)

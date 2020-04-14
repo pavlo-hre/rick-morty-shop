@@ -15,32 +15,18 @@ const schema = Yup.object().shape({
     .required('Required'),
 });
 
-const AuthFormTab = props => {
-  return (
-    <Tabs
-      efaultActiveKey="Sign in" id="uncontrolled-tab-example"
-    >
-      <Tab eventKey="Sign in" title="Sign in">
-        <AuthForm {...props} isLogin={true}/>
-      </Tab>
-      <Tab eventKey="Sign up" title="Sign up">
-        <AuthForm {...props} isLogin={false}/>
-      </Tab>
-    </Tabs>
-  );
-}
-
 const AuthForm = props => {
   return (
     <Container>
       <Formik
         initialValues={{
+          userName: '',
           password: '',
           email: '',
         }}
         validationSchema={schema}
-        onSubmit={({email, password}) => {
-          props.auth(email, password, props.isLogin)
+        onSubmit={({email, password, userName}) => {
+          props.auth(email, password, userName, props.isLogin)
         }}
       >
         {({
@@ -52,11 +38,31 @@ const AuthForm = props => {
             errors,
           }) => (
           <Form noValidate onSubmit={handleSubmit}>
-            <Form.Group controlId="validationFormik01">
+            {props.isLogin
+              ?
+              null
+              :
+              <Form.Group controlId="validationFormik01">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your name"
+                  name="userName"
+                  value={values.userName}
+                  onChange={handleChange}
+                  isInvalid={!!errors.userName}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.userName}
+                </Form.Control.Feedback>
+              </Form.Group>
+            }
+
+            <Form.Group controlId="validationFormik02">
               <Form.Label>Login</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="email"
+                placeholder="Enter your email"
                 name="email"
                 value={values.email}
                 onChange={handleChange}
@@ -66,12 +72,11 @@ const AuthForm = props => {
                 {errors.email}
               </Form.Control.Feedback>
             </Form.Group>
-
-            <Form.Group controlId="validationFormik02">
+            <Form.Group controlId="validationFormik03">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="password"
+                placeholder="Enter password"
                 name="password"
                 value={values.password}
                 onChange={handleChange}
@@ -81,7 +86,7 @@ const AuthForm = props => {
                 {errors.password}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group>
+            <Form.Group controlId="validationFormik04">
               <Form.Check
                 name="remember"
                 label="Remember me"
@@ -100,4 +105,4 @@ const AuthForm = props => {
   )
 }
 
-export default connect(null, {auth})(AuthFormTab)
+export default connect(null, {auth})(AuthForm)

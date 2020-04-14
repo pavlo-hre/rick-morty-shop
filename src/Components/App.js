@@ -11,9 +11,9 @@ import Menu from "./Menu/Menu"
 import {connect} from "react-redux"
 import {fetchData} from "../Redux/Actions/product"
 import Cart from "./Cart/Cart"
-import Auth from "./Auth/Auth";
-import MyModal from "../UI/Modal/Modal";
-import {autoLogin} from "../Redux/Actions/auth";
+import MyModal from "../UI/Modal/Modal"
+import {autoLogin} from "../Redux/Actions/auth"
+import AuthFormTab from "./Auth/Tabs"
 
 const App = props => {
   const [modalShow, setModalShow] = React.useState(false)
@@ -39,7 +39,7 @@ const App = props => {
           onHide={() => setModalShow(false)}
           modaltitle='Log in'
         >
-          <Auth/>
+          <AuthFormTab/>
         </MyModal>
         <Switch>
           <Route path='/' exact>
