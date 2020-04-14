@@ -2,7 +2,7 @@ import React from "react"
 import {
   Navbar,
   Nav,
-  Container, Badge
+  Container, Badge, Button
 } from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
@@ -19,6 +19,12 @@ const Menu = props => {
             <NavLink to="/news"
                      className='btn btn-link text-white'>News</NavLink>
           </Nav>
+          <Button
+            variant={"secondary"}
+            onClick={()=>props.modalOpen(true)}
+          >
+            Login
+          </Button>
           <NavLink
             to='/cart'
             className='btn btn-link text-white cart-link'

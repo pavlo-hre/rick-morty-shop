@@ -11,19 +11,35 @@ import Menu from "./Menu/Menu"
 import {connect} from "react-redux"
 import {fetchData} from "../Redux/Actions/product"
 import Cart from "./Cart/Cart"
+import Auth from "./Auth/Auth";
+import MyModal from "../UI/Modal/Modal";
 
 const App = props => {
+  const [modalShow, setModalShow] = React.useState(false)
+
   useEffect(() => {
     props.fetchData()
   }, [])
+
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(props.cartData))
   }, [props.cartData])
 
+  const submit = values => {
+    // print the form values to the console
+    console.log(values)
+  }
   return (
     <Router>
       <Container fluid className='px-0'>
-        <Menu/>
+        <Menu modalOpen={setModalShow}/>
+        <MyModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          modaltitle='Log in'
+        >
+          <Auth onSubmit={submit}/>
+        </MyModal>
         <Switch>
           <Route path='/' exact>
             <ProductList/>
