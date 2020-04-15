@@ -19,11 +19,14 @@ const App = props => {
   const [authModalShow, setAuthModalShow] = useState(false)
 
   useEffect(() => {
-    props.fetchData()
+    let cartLocalStorage = JSON.parse(localStorage.getItem('cart'))
+    props.fetchData(cartLocalStorage)
+    console.log(cartLocalStorage)
   }, [])
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(props.cartData))
+    console.log(props.cartData)
   }, [props.cartData])
 
   useEffect(() => {

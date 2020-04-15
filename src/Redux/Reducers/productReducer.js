@@ -29,6 +29,11 @@ const productReducer = (state = initialState, action) => {
     case FETCH_DATA_SUCCES:
       return {
         ...state, data: action.data, isLoading: false,
+          cart: {
+            orders: action.cart,
+            total: action.cart.reduce((acc,el)=>acc+el.price,0)
+          },
+
       }
     case FETCH_DATA_ERROR:
       return {

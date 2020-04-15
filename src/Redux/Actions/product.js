@@ -12,9 +12,10 @@ import {
 const fetchStart = () => ({
   type: FETCH_DATA_START
 })
-const fetchSuccess = data => ({
+const fetchSuccess = (data,cart) => ({
   type: FETCH_DATA_SUCCES,
-  data
+  data,
+  cart
 })
 const fetchError = error => ({
   type: FETCH_DATA_ERROR,
@@ -26,13 +27,25 @@ export const setSelected = id => ({
   id
 })
 
-export const fetchData = () => async dispatch => {
+export const fetchData = cart => async dispatch => {
   try {
     dispatch(fetchStart())
     const {data} = await axios
       .get(`https://rick-morty-3c452.firebaseio.com/heroes.json`)
-    const resData = data['-M4hkpNGoQXhJjS4ymkS'].map(el => ({...el, inCart: 0}))
-    dispatch(fetchSuccess(resData))
+
+    //todo add to data inCart field
+    let resData = data['-M4hkpNGoQXhJjS4ymkS'].map(el => ({...el, inCart: 0}))
+
+    if(cart && cart.length){
+       resData = resData.map(el => {cart.forEach(elem => {
+        if (elem.id === el.id) {
+          el.inCart = elem.inCart
+        }
+      })
+        return el
+      })
+    }
+    dispatch(fetchSuccess(resData, cart = []))
   } catch (e) {
     dispatch(fetchError(e))
     console.log(e)
