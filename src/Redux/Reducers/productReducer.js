@@ -66,16 +66,18 @@ const productReducer = (state = initialState, action) => {
       }
     case REMOVE_CART_ITEM:
       return {
-        ...state, data: state.data.map(el => {
+        ...state,
+        cart: {
+          ...state.cart,
+          orders: state.cart.orders.filter(el => el.id !== action.order.id),
+          total: state.cart.total - action.order.price * action.order.inCart
+        },
+        data: state.data.map(el => {
           if (el.id === action.order.id) {
             el.inCart = 0
           }
           return el
         }),
-        cart: {
-          ...state.cart, orders: state.data.filter(el => !!el.inCart),
-          total: state.cart.total - action.order.price
-        },
       }
     default:
       return state
