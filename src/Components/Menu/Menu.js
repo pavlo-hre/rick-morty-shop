@@ -3,20 +3,22 @@ import {
   Navbar,
   Nav,
   Container, Badge, Button, Dropdown
-} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
-import {connect} from "react-redux";
-import {logOut} from "../../Redux/Actions/auth";
+} from "react-bootstrap"
+import {NavLink} from "react-router-dom"
+import {connect} from "react-redux"
+import {logOut} from "../../Redux/Actions/auth"
 
 const Menu = props => {
   if (props.authData.token) {
     props.modalOpen(false)
   }
-
   return (
-    <Navbar bg="dark" expand="lg" className='mb-5 nav-menu '>
+    <Navbar bg="dark" variant="dark" expand="lg" className='mb-5 nav-menu '>
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+        <h2 className='navbar-brand ml-2'>
+          RICK AND MORTY SHOP
+        </h2>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <NavLink to="/" exact
@@ -24,41 +26,41 @@ const Menu = props => {
             <NavLink to="/news"
                      className='btn btn-link text-white'>News</NavLink>
           </Nav>
-          <NavLink
-            to='/cart'
-            className='btn btn-link text-white cart-link mr-3'
-          >
-            Cart
-            <Badge
+        </Navbar.Collapse>
+        <NavLink
+          to='/cart'
+          className='btn btn-link text-white cart-link mr-3'
+        >
+          Cart
+          {
+            !!props.cartData && <Badge
               variant='danger'
             >{props.cartData}</Badge>
-          </NavLink>
-          {props.authData.token
-            ?
-            <>
-              <Dropdown>
-                <Dropdown.Toggle
-                  variant="secondary"
-                  id="dropdown-basic">
-                  {props.authData.user}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Button
-                    variant='light'
-                    onClick={props.logOut}
-                  >Log out</Button>
-                </Dropdown.Menu>
-              </Dropdown>
-            </>
-            :
-            <Button
-              variant="secondary"
-              onClick={() => props.modalOpen(true)}
-            >
-              Login
-            </Button>
           }
-        </Navbar.Collapse>
+        </NavLink>
+        {props.authData.token
+          ?
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="secondary"
+              id="dropdown-basic">
+              {props.authData.user}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Button
+                variant='light'
+                onClick={props.logOut}
+              >Log out</Button>
+            </Dropdown.Menu>
+          </Dropdown>
+          :
+          <Button
+            variant="secondary"
+            onClick={() => props.modalOpen(true)}
+          >
+            Login
+          </Button>
+        }
       </Container>
     </Navbar>
   )

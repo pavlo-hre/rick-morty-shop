@@ -1,8 +1,7 @@
 import React from "react"
-import {Button, Modal} from "react-bootstrap";
+import {Modal} from "react-bootstrap"
 
 const MyModal = props => {
-
   return (
     <Modal
       {...props}
@@ -20,11 +19,8 @@ const MyModal = props => {
       <Modal.Body>
         {props.children}
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant='danger' onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
-  );
+  )
 }
 
 export default MyModal

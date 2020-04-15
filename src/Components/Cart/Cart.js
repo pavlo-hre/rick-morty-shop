@@ -25,7 +25,6 @@ const Cart = props => {
   }
   return (
     <Container>
-
       <Table size="sm" striped bordered hover variant="dark">
         <thead>
         <tr className='text-center'>
@@ -33,7 +32,7 @@ const Cart = props => {
           <th style={{width: '60%'}}>Product</th>
           <th style={{width: '5%'}}>Price</th>
           <th style={{width: '10%'}}>Count</th>
-          <th style={{width: '5%'}}>Summ</th>
+          <th style={{width: '5%'}}>Sum</th>
           <th style={{width: '5%'}}></th>
         </tr>
         </thead>
@@ -57,7 +56,7 @@ const Cart = props => {
                 <Button
                   variant='secondary'
                   onClick={() => props.decCart(el)}
-                  disabled={el.inCart===1&&true}
+                  disabled={el.inCart === 1 && true}
                 >-</Button>
                 <span>{el.inCart}</span>
                 <Button
@@ -89,10 +88,9 @@ const Cart = props => {
       </Table>
       <div className='d-flex justify-content-end'>
         <Button
-        variant={"success"}
-        className='px-5'
-      >Pay</Button></div>
-
+          variant="success"
+          className='px-5'
+        >Pay</Button></div>
     </Container>
   )
 }

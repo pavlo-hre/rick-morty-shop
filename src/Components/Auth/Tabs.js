@@ -3,7 +3,7 @@ import {Tab, Tabs} from "react-bootstrap"
 import AuthForm from './Auth'
 
 
-const AuthFormTab = props => {
+const AuthFormTab = () => {
   return (
     <Tabs
       efaultActiveKey="Sign in" id="uncontrolled-tab-example"

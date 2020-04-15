@@ -1,11 +1,17 @@
 import axios from "axios"
-import {AUTH_LOGOUT, AUTH_SUCCESS} from "./actionTypes"
+import {AUTH_ERROR, AUTH_LOGOUT, AUTH_SUCCESS} from "./actionTypes"
 
 const authSuccess = (token, user) => ({
   type: AUTH_SUCCESS,
   token,
   user
 })
+
+const authError = error => ({
+  type: AUTH_ERROR,
+  error
+})
+
 export const logOut = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('user')
@@ -35,6 +41,7 @@ export const autoLogin = () => dispatch => {
   }
 }
 
+
 export const auth = (email, password, userName, isLogin) => async (dispatch) => {
   const authData = {
     email,
@@ -59,7 +66,16 @@ export const auth = (email, password, userName, isLogin) => async (dispatch) => 
     localStorage.setItem('expirationDate', expDate)
     dispatch(authSuccess(data.idToken, data.displayName))
     dispatch(autoLogOut(data.expiresIn))
-  } catch (e) {
-    console.log(e)
+  } catch (error) {
+    console.log(error)
+    const errorMessage = error.response
+      ?
+      error.response.data.error.message
+      :
+      'SERVER ERROR, PLEASE TRY LATER'
+    dispatch(authError(errorMessage))
+    //EMAIL_NOT_FOUND
+    //INVALID_PASSWORD
+    //EMAIL_EXISTS
   }
 }

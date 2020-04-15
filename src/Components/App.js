@@ -16,7 +16,7 @@ import {autoLogin} from "../Redux/Actions/auth"
 import AuthFormTab from "./Auth/Tabs"
 
 const App = props => {
-  const [modalShow, setModalShow] = React.useState(false)
+  const [authModalShow, setAuthModalShow] = useState(false)
 
   useEffect(() => {
     props.fetchData()
@@ -26,17 +26,17 @@ const App = props => {
     localStorage.setItem('cart', JSON.stringify(props.cartData))
   }, [props.cartData])
 
-  useEffect(()=>{
+  useEffect(() => {
     props.autoLogin()
-  },[])
+  }, [])
 
   return (
     <Router>
       <Container fluid className='px-0'>
-        <Menu modalOpen={setModalShow}/>
+        <Menu modalOpen={setAuthModalShow}/>
         <MyModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
+          show={authModalShow}
+          onHide={() => setAuthModalShow(false)}
           modaltitle='Log in'
         >
           <AuthFormTab/>

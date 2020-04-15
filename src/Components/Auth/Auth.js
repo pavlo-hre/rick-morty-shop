@@ -1,9 +1,9 @@
-import React, {useState} from "react"
-import {Button, Container, Form, Tab, Tabs} from "react-bootstrap"
+import React from "react"
+import {Alert, Button, Container, Form} from "react-bootstrap"
 import {Formik} from 'formik'
 import * as Yup from 'yup'
-import {auth} from "../../Redux/Actions/auth";
-import {connect} from "react-redux";
+import {auth} from "../../Redux/Actions/auth"
+import {connect} from "react-redux"
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -16,6 +16,7 @@ const schema = Yup.object().shape({
 });
 
 const AuthForm = props => {
+  console.log(props)
   return (
     <Container>
       <Formik
@@ -33,8 +34,6 @@ const AuthForm = props => {
             handleSubmit,
             handleChange,
             values,
-            touched,
-            isValid,
             errors,
           }) => (
           <Form noValidate onSubmit={handleSubmit}>
@@ -42,7 +41,7 @@ const AuthForm = props => {
               ?
               null
               :
-              <Form.Group controlId="validationFormik01">
+              <Form.Group>
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
@@ -57,8 +56,7 @@ const AuthForm = props => {
                 </Form.Control.Feedback>
               </Form.Group>
             }
-
-            <Form.Group controlId="validationFormik02">
+            <Form.Group>
               <Form.Label>Login</Form.Label>
               <Form.Control
                 type="email"
@@ -72,7 +70,7 @@ const AuthForm = props => {
                 {errors.email}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="validationFormik03">
+            <Form.Group >
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -86,14 +84,13 @@ const AuthForm = props => {
                 {errors.password}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="validationFormik04">
-              <Form.Check
-                name="remember"
-                label="Remember me"
-                onChange={handleChange}
-                id="validationFormik0"
-              />
-            </Form.Group>
+            {props.errorMessage
+              ?
+              <Alert variant="warning">
+                {props.errorMessage}
+              </Alert>
+              : null
+            }
             <Button
               type="submit"
               variant='success'
@@ -104,5 +101,8 @@ const AuthForm = props => {
     </Container>
   )
 }
+const mapStateToProps = state => ({
+  errorMessage: state.auth.error
+})
 
-export default connect(null, {auth})(AuthForm)
+export default connect(mapStateToProps, {auth})(AuthForm)
