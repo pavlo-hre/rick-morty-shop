@@ -1,5 +1,10 @@
 import axios from "axios"
-import {AUTH_ERROR, AUTH_LOGOUT, AUTH_SUCCESS} from "./actionTypes"
+import {
+  AUTH_ERROR,
+  AUTH_LOGOUT,
+  AUTH_SUCCESS,
+  OPEN_AUTH_MODAL
+} from "./actionTypes"
 
 const authSuccess = (token, user) => ({
   type: AUTH_SUCCESS,
@@ -12,10 +17,13 @@ const authError = error => ({
   error
 })
 
+export const openAuthModal = () => ({
+  type: OPEN_AUTH_MODAL
+})
+
 export const logOut = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('user')
-  localStorage.removeItem('cart')
   localStorage.removeItem('expirationDate')
   return {
     type: AUTH_LOGOUT
@@ -40,7 +48,6 @@ export const autoLogin = () => dispatch => {
     }
   }
 }
-
 
 export const auth = (email, password, userName, isLogin) => async (dispatch) => {
   const authData = {

@@ -1,9 +1,9 @@
 import React from "react"
-import {Col, Container, Row} from "react-bootstrap";
-import CardItem from "./Blocks/CardItem";
-import {addToCart, setSelected} from "../../Redux/Actions/product";
-import {connect} from "react-redux";
-import {Loader} from "../../UI/Loader/Loader";
+import {Col, Container, Row} from "react-bootstrap"
+import CardItem from "./Blocks/CardItem"
+import {addToCart, setSelected} from "../../Redux/Actions/product"
+import {connect} from "react-redux"
+import {Loader} from "../../UI/Loader/Loader"
 
 
 const Product = props => {
@@ -12,7 +12,6 @@ const Product = props => {
       <CardItem
         card={el}
         index={i}
-        onClickHandler={props.setSelected}
         onAddHandler={props.addToCart}/>
     </Col>
   )
@@ -36,5 +35,5 @@ const mapStateToProps = store => ({
 })
 
 export default connect(mapStateToProps,
-  {setSelected, addToCart})(Product)
+  {addToCart})(Product)
 

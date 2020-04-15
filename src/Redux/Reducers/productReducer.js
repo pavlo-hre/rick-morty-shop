@@ -29,11 +29,6 @@ const productReducer = (state = initialState, action) => {
     case FETCH_DATA_SUCCES:
       return {
         ...state, data: action.data, isLoading: false,
-          cart: {
-            orders: action.cart,
-            total: action.cart.reduce((acc,el)=>acc+el.price,0)
-          },
-
       }
     case FETCH_DATA_ERROR:
       return {
@@ -55,7 +50,6 @@ const productReducer = (state = initialState, action) => {
           ...state.cart, orders: state.data.filter(el => !!el.inCart),
           total: state.cart.total + action.order.price
         },
-        selected: {...state.selected, inCart: ++state.selected.inCart},
       }
     case DEC_CART_ITEM:
       return {
@@ -69,11 +63,6 @@ const productReducer = (state = initialState, action) => {
           ...state.cart, orders: state.data.filter(el => !!el.inCart),
           total: state.cart.total - action.order.price
         },
-        selected: state.selected.id === action.order.id
-          ?
-          {...state.selected, inCart: --state.selected.inCart}
-          :
-          state.selected,
       }
     case REMOVE_CART_ITEM:
       return {
@@ -87,11 +76,6 @@ const productReducer = (state = initialState, action) => {
           ...state.cart, orders: state.data.filter(el => !!el.inCart),
           total: state.cart.total - action.order.price
         },
-        selected: state.selected.id === action.order.id
-          ?
-          {...state.selected, inCart: 0}
-          :
-          state.selected,
       }
     default:
       return state

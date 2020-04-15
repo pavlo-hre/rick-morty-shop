@@ -44,7 +44,6 @@ const Cart = props => {
               <td>
                 <Link
                   to={`/product/${el.id}`}
-                  onClick={() => props.setSelected(el.id)}
                   className='text-white'
                 >
                   {el.name}

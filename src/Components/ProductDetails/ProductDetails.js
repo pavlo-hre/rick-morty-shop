@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {
   Button,
   Card,
@@ -11,11 +11,16 @@ import {
 import {connect} from "react-redux"
 import {Link, withRouter} from "react-router-dom"
 import {compose} from "redux"
-import {addToCart} from "../../Redux/Actions/product";
+import {addToCart, setSelected} from "../../Redux/Actions/product"
 
 
-const ProductDetails = (props) => {
+const ProductDetails = props => {
   const {detailInfo} = props
+
+  useEffect(() => {
+    props.data.length && props.setSelected(+props.match.params.id)
+  }, [props.data])
+
   return (
     <Container>
       <Row>
@@ -59,6 +64,10 @@ const ProductDetails = (props) => {
   )
 }
 const mapStateToProps = store => ({
+  data: store.product.data,
   detailInfo: store.product.selected,
 })
-export default compose(connect(mapStateToProps, {addToCart}), withRouter)(ProductDetails)
+export default compose(connect(mapStateToProps, {
+  addToCart,
+  setSelected
+}), withRouter)(ProductDetails)

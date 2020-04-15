@@ -19,15 +19,8 @@ const App = props => {
   const [authModalShow, setAuthModalShow] = useState(false)
 
   useEffect(() => {
-    let cartLocalStorage = JSON.parse(localStorage.getItem('cart'))
-    props.fetchData(cartLocalStorage)
-    console.log(cartLocalStorage)
+    props.fetchData()
   }, [])
-
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(props.cartData))
-    console.log(props.cartData)
-  }, [props.cartData])
 
   useEffect(() => {
     props.autoLogin()
@@ -48,7 +41,7 @@ const App = props => {
           <Route path='/' exact>
             <ProductList/>
           </Route>
-          <Route path='/product/:id' render={() => <ProductDetails/>}/>
+          <Route path='/product/:id' component={ProductDetails}/>
           <Route path='/news'/>
           <Route path='/cart' component={Cart}/>
         </Switch>
@@ -58,6 +51,5 @@ const App = props => {
 }
 const mapStateToProps = state => ({
   cartData: state.product.cart.orders,
-
 })
 export default connect(mapStateToProps, {fetchData, autoLogin})(App)

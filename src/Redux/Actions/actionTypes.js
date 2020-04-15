@@ -8,5 +8,6 @@ export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_LOGOUT = 'AUTH_LOGOUT'
 export const AUTH_ERROR = 'AUTH_ERROR'
+export const OPEN_AUTH_MODAL = 'OPEN_AUTH_MODAL'
 
 
