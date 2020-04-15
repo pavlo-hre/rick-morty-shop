@@ -3,6 +3,7 @@ import {
   AUTH_ERROR,
   AUTH_LOGOUT,
   AUTH_SUCCESS,
+  CLOSE_AUTH_MODAL,
   OPEN_AUTH_MODAL
 } from "./actionTypes"
 
@@ -19,6 +20,9 @@ const authError = error => ({
 
 export const openAuthModal = () => ({
   type: OPEN_AUTH_MODAL
+})
+export const closeAuthModal = () => ({
+  type: CLOSE_AUTH_MODAL
 })
 
 export const logOut = () => {

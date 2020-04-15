@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,11 +12,10 @@ import {connect} from "react-redux"
 import {fetchData} from "../Redux/Actions/product"
 import Cart from "./Cart/Cart"
 import MyModal from "../UI/Modal/Modal"
-import {autoLogin} from "../Redux/Actions/auth"
+import {autoLogin, closeAuthModal, openAuthModal} from "../Redux/Actions/auth"
 import AuthFormTab from "./Auth/Tabs"
 
 const App = props => {
-  const [authModalShow, setAuthModalShow] = useState(false)
 
   useEffect(() => {
     props.fetchData()
@@ -29,10 +28,12 @@ const App = props => {
   return (
     <Router>
       <Container fluid className='px-0'>
-        <Menu modalOpen={setAuthModalShow}/>
+        <Menu
+          modalOpen={props.openAuthModal}
+          modalHide={props.closeAuthModal}/>
         <MyModal
-          show={authModalShow}
-          onHide={() => setAuthModalShow(false)}
+          show={props.authModalShow}
+          onHide={props.closeAuthModal}
           modaltitle='Log in'
         >
           <AuthFormTab/>
@@ -51,5 +52,11 @@ const App = props => {
 }
 const mapStateToProps = state => ({
   cartData: state.product.cart.orders,
+  authModalShow: state.auth.isModalOpen
 })
-export default connect(mapStateToProps, {fetchData, autoLogin})(App)
+export default connect(mapStateToProps, {
+  fetchData,
+  openAuthModal,
+  closeAuthModal,
+  autoLogin
+})(App)

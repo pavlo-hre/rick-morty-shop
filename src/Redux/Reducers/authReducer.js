@@ -1,9 +1,15 @@
-import {AUTH_ERROR, AUTH_LOGOUT, AUTH_SUCCESS} from "../Actions/actionTypes"
+import {
+  AUTH_ERROR,
+  AUTH_LOGOUT,
+  AUTH_SUCCESS, CLOSE_AUTH_MODAL,
+  OPEN_AUTH_MODAL
+} from "../Actions/actionTypes"
 
 const initialState = {
   token: null,
   user: null,
-  error: null
+  error: null,
+  isModalOpen: false
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -19,6 +25,14 @@ export const authReducer = (state = initialState, action) => {
     case AUTH_ERROR:
       return {
         ...state, error: action.error
+      }
+    case OPEN_AUTH_MODAL:
+      return {
+        ...state, isModalOpen: true
+      }
+    case CLOSE_AUTH_MODAL:
+      return {
+        ...state, isModalOpen: false
       }
     default:
       return state

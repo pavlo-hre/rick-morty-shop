@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {
   Navbar,
   Nav,
@@ -9,9 +9,13 @@ import {connect} from "react-redux"
 import {logOut} from "../../Redux/Actions/auth"
 
 const Menu = props => {
-  if (props.authData.token) {
-    props.modalOpen(false)
-  }
+
+  useEffect(() => {
+    if (props.authData.token) {
+      props.modalHide()
+    }
+  }, [props.authData.token])
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className='mb-5 nav-menu '>
       <Container>
@@ -56,7 +60,7 @@ const Menu = props => {
           :
           <Button
             variant="secondary"
-            onClick={() => props.modalOpen(true)}
+            onClick={props.modalOpen}
           >
             Login
           </Button>

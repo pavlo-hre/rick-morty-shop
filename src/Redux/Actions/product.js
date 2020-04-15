@@ -31,10 +31,7 @@ export const fetchData = () => async dispatch => {
     dispatch(fetchStart())
     const {data} = await axios
       .get(`https://rick-morty-3c452.firebaseio.com/heroes.json`)
-
-    //todo add inCart field
-    const resData = data['-M4hkpNGoQXhJjS4ymkS'].map(el => ({...el, inCart: 0}))
-
+    const resData = data['-M4xVrbL-y6KiL0uMOiM']
     dispatch(fetchSuccess(resData))
   } catch (e) {
     dispatch(fetchError(e))

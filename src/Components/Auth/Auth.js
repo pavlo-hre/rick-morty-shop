@@ -16,7 +16,6 @@ const schema = Yup.object().shape({
 });
 
 const AuthForm = props => {
-  console.log(props)
   return (
     <Container>
       <Formik
@@ -70,7 +69,7 @@ const AuthForm = props => {
                 {errors.email}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group >
+            <Form.Group>
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
