@@ -1,0 +1,28 @@
+.card {
+  min-height: 410px;
+  @media (max-width: 992px) {
+    min-height: 445px;
+  }
+  @media (max-width: 800px) {
+    min-height: 480px;
+  }
+  @media (max-width: 767px) {
+    min-height: 400px;
+  }
+  .card-img-top{
+    @media (max-width: 767px) {
+      width: 50%;
+      align-self: center;
+      margin-top: 10px;
+    }
+  }
+  .badge {
+    padding: 10px;
+    font-size: 20px;
+    margin-top: auto;
+    position: absolute;
+    right: 0;
+    opacity: 0.8;
+  }
+}
+
