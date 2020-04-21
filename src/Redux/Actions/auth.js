@@ -7,10 +7,11 @@ import {
   OPEN_AUTH_MODAL
 } from "./actionTypes"
 
-const authSuccess = (token, user) => ({
+const authSuccess = (token, user, expDate) => ({
   type: AUTH_SUCCESS,
   token,
-  user
+  user,
+  expDate
 })
 
 const authError = error => ({
@@ -26,31 +27,12 @@ export const closeAuthModal = () => ({
 })
 
 export const logOut = () => {
-  localStorage.removeItem('token')
-  localStorage.removeItem('user')
-  localStorage.removeItem('expirationDate')
   return {
     type: AUTH_LOGOUT
   }
 }
 const autoLogOut = time => dispatch => {
   setTimeout(() => dispatch(logOut()), time * 1000)
-}
-
-export const autoLogin = () => dispatch => {
-  const token = localStorage.getItem('token')
-  const user = localStorage.getItem('user')
-  if (!token) {
-    dispatch(logOut())
-  } else {
-    const expDate = new Date(localStorage.getItem('expirationDate'))
-    if (expDate <= new Date()) {
-      dispatch(logOut())
-    } else {
-      dispatch(authSuccess(token, user))
-      dispatch(autoLogOut((expDate.getTime() - new Date().getTime()) / 1000))
-    }
-  }
 }
 
 export const auth = (email, password, userName, isLogin) => async (dispatch) => {
@@ -72,10 +54,7 @@ export const auth = (email, password, userName, isLogin) => async (dispatch) => 
     const {data} = await axios
       .post(loginUrl, authData)
     const expDate = new Date(new Date().getTime() + data.expiresIn * 1000)
-    localStorage.setItem('token', data.idToken)
-    localStorage.setItem('user', data.displayName)
-    localStorage.setItem('expirationDate', expDate)
-    dispatch(authSuccess(data.idToken, data.displayName))
+    dispatch(authSuccess(data.idToken, data.displayName, expDate))
     dispatch(autoLogOut(data.expiresIn))
   } catch (error) {
     console.log(error)

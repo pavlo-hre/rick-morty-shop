@@ -12,14 +12,14 @@ import {connect} from "react-redux"
 import {fetchData} from "Redux/Actions/product"
 import Cart from "./Cart/Cart"
 import MyModal from "UI/Modal/Modal"
-import {autoLogin, closeAuthModal, openAuthModal} from "Redux/Actions/auth"
+import {closeAuthModal, openAuthModal} from "Redux/Actions/auth"
 import AuthFormTab from "./Auth/Tabs"
+
 
 const App = props => {
 
   useEffect(() => {
     props.fetchData()
-    props.autoLogin()
   }, [])
 
 
@@ -56,5 +56,4 @@ export default connect(mapStateToProps, {
   fetchData,
   openAuthModal,
   closeAuthModal,
-  autoLogin
 })(App)

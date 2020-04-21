@@ -26,18 +26,14 @@ export const setSelected = id => ({
   id
 })
 
+
 export const fetchData = () => async dispatch => {
   try {
     dispatch(fetchStart())
     const {data} = await axios
-      .get(`https://rickandmortyapi.com/api/character/`)
-    const transformData = data.results.map(el => {
-      el.inCart = 0
-      el.location = el.location.name
-      el.price = [...el.name].reduce((acc, el) => acc + el.charCodeAt(), 0)
-      return el
-    })
-    dispatch(fetchSuccess(transformData))
+      .get(`https://rick-morty-3c452.firebaseio.com/heroes.json`)
+    const resData = data['-M4xVrbL-y6KiL0uMOiM']
+    dispatch(fetchSuccess(resData))
   } catch (e) {
     dispatch(fetchError(e))
     console.log(e)

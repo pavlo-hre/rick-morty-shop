@@ -9,18 +9,27 @@ const initialState = {
   token: null,
   user: null,
   error: null,
-  isModalOpen: false
+  isModalOpen: false,
+  expirationDate: null
 }
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:
       return {
-        ...state, token: action.token, user: action.user, error: null
+        ...state,
+        token: action.token,
+        user: action.user,
+        error: null,
+        expirationDate: action.expDate
       }
     case AUTH_LOGOUT:
       return {
-        ...state, token: null
+        ...state,
+        token: null,
+        user: null,
+        error: null,
+        expirationDate: null
       }
     case AUTH_ERROR:
       return {
