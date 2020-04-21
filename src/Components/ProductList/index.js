@@ -1,9 +1,9 @@
 import React from "react"
 import {Col, Container, Row} from "react-bootstrap"
 import CardItem from "./Blocks/CardItem"
-import {addToCart, setSelected} from "../../Redux/Actions/product"
+import {addToCart, setSelected} from "Redux/Actions/product"
 import {connect} from "react-redux"
-import {Loader} from "../../UI/Loader/Loader"
+import {Loader} from "UI/Loader/Loader"
 
 
 const Product = props => {

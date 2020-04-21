@@ -5,7 +5,7 @@ import {
   addToCart,
   decCart,
   removeFromCart, setSelected
-} from "../../Redux/Actions/product"
+} from "Redux/Actions/product"
 import {Link} from "react-router-dom"
 
 

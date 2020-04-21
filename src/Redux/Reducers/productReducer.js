@@ -6,7 +6,7 @@ import {
   FETCH_DATA_SUCCES,
   REMOVE_CART_ITEM,
   SELECT_ITEM
-} from "../Actions/actionTypes"
+} from "Redux/Actions/actionTypes"
 
 const initialState = {
   data: [],

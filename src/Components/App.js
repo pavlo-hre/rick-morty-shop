@@ -9,21 +9,19 @@ import ProductDetails from "./ProductDetails/ProductDetails"
 import {Container} from "react-bootstrap"
 import Menu from "./Menu/Menu"
 import {connect} from "react-redux"
-import {fetchData} from "../Redux/Actions/product"
+import {fetchData} from "Redux/Actions/product"
 import Cart from "./Cart/Cart"
-import MyModal from "../UI/Modal/Modal"
-import {autoLogin, closeAuthModal, openAuthModal} from "../Redux/Actions/auth"
+import MyModal from "UI/Modal/Modal"
+import {autoLogin, closeAuthModal, openAuthModal} from "Redux/Actions/auth"
 import AuthFormTab from "./Auth/Tabs"
 
 const App = props => {
 
   useEffect(() => {
     props.fetchData()
-  }, [])
-
-  useEffect(() => {
     props.autoLogin()
   }, [])
+
 
   return (
     <Router>

@@ -3,7 +3,7 @@ import {
   AUTH_LOGOUT,
   AUTH_SUCCESS, CLOSE_AUTH_MODAL,
   OPEN_AUTH_MODAL
-} from "../Actions/actionTypes"
+} from "Redux/Actions/actionTypes"
 
 const initialState = {
   token: null,

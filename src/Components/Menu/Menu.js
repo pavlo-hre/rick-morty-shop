@@ -6,15 +6,15 @@ import {
 } from "react-bootstrap"
 import {NavLink} from "react-router-dom"
 import {connect} from "react-redux"
-import {logOut} from "../../Redux/Actions/auth"
+import {logOut} from "Redux/Actions/auth"
 
 const Menu = props => {
-
+  const {authData, modalHide, cartData, logOut, modalOpen} = props
   useEffect(() => {
-    if (props.authData.token) {
-      props.modalHide()
+    if (authData.token) {
+      modalHide()
     }
-  }, [props.authData.token])
+  }, [authData.token])
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className='mb-5 nav-menu '>
@@ -31,36 +31,37 @@ const Menu = props => {
                      className='btn btn-link text-white'>News</NavLink>
           </Nav>
         </Navbar.Collapse>
+
         <NavLink
           to='/cart'
           className='btn btn-link text-white cart-link mr-3'
-        >
-          Cart
+        >Cart
           {
-            !!props.cartData && <Badge
-              variant='danger'
-            >{props.cartData}</Badge>
+            !!cartData
+            &&
+            <Badge variant='danger'>{cartData}</Badge>
           }
         </NavLink>
-        {props.authData.token
+
+        {authData.token
           ?
           <Dropdown>
             <Dropdown.Toggle
               variant="secondary"
               id="dropdown-basic">
-              {props.authData.user}
+              {authData.user}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Button
                 variant='light'
-                onClick={props.logOut}
+                onClick={logOut}
               >Log out</Button>
             </Dropdown.Menu>
           </Dropdown>
           :
           <Button
             variant="secondary"
-            onClick={props.modalOpen}
+            onClick={modalOpen}
           >
             Login
           </Button>

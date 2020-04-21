@@ -2,7 +2,7 @@ import React from "react"
 import {Alert, Button, Container, Form} from "react-bootstrap"
 import {Formik} from 'formik'
 import * as Yup from 'yup'
-import {auth} from "../../Redux/Actions/auth"
+import {auth} from "Redux/Actions/auth"
 import {connect} from "react-redux"
 
 const schema = Yup.object().shape({

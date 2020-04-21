@@ -11,7 +11,7 @@ import {
 import {connect} from "react-redux"
 import {Link, withRouter} from "react-router-dom"
 import {compose} from "redux"
-import {addToCart, setSelected} from "../../Redux/Actions/product"
+import {addToCart, setSelected} from "Redux/Actions/product"
 
 
 const ProductDetails = props => {
