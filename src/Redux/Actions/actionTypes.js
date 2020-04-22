@@ -4,6 +4,7 @@ export const FETCH_DATA_ERROR = 'FETCH_DATA_ERROR'
 export const SELECT_ITEM = 'SELECT_ITEM'
 export const ADD_TO_CART = 'ADD_TO_CART'
 export const DEC_CART_ITEM = 'DEC_CART_ITEM'
+export const INC_CART_ITEM = 'INC_CART_ITEM'
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_LOGOUT = 'AUTH_LOGOUT'
@@ -14,6 +15,7 @@ export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const SET_COUNT_ON_PAGE = 'SET_COUNT_ON_PAGE'
 export const SEARCH_ITEM = 'SEARCH_ITEM'
 export const RESET_SEARCH = 'RESET_SEARCH'
+export const SYNC_DATA = 'SYNC_DATA'
 
 
 

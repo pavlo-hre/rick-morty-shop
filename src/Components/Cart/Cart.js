@@ -2,7 +2,7 @@ import React from "react"
 import {Button, Container, Jumbotron, Table} from 'react-bootstrap'
 import {connect} from "react-redux"
 import {
-  addToCart,
+  incCart,
   decCart,
   removeFromCart, setSelected
 } from "Redux/Actions/product"
@@ -60,7 +60,7 @@ const Cart = props => {
                 <span>{el.inCart}</span>
                 <Button
                   variant='secondary'
-                  onClick={() => props.addToCart(el)}
+                  onClick={() => props.incCart(el)}
                 >+</Button>
               </td>
               <td>{el.inCart * el.price}</td>
@@ -98,7 +98,7 @@ const mapStateToProps = store => ({
 })
 
 export default connect(mapStateToProps, {
-  addToCart,
+  incCart,
   decCart,
   removeFromCart,
   setSelected

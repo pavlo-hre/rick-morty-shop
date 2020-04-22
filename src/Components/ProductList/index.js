@@ -32,7 +32,7 @@ const Product = props => {
               className='text-center mb-1'
               style={{height: 25}}
             >
-              {props.searchRequest && `Characters found ${props.allData.length} `}
+              {props.searchRequest && `Characters found ${props.reqResData.length} `}
             </Col>
           </Row>
           <Row xs={1} md={2} lg={3} xl={4}>
@@ -51,7 +51,7 @@ const Product = props => {
   )
 }
 const mapStateToProps = store => ({
-  allData: store.product.data,
+  reqResData: store.product.data,
   data: store.product.pageData,
   loading: store.product.isLoading,
   pages: store.product.pages,
