@@ -5,11 +5,19 @@ import {
   FETCH_DATA_START,
   FETCH_DATA_SUCCES,
   REMOVE_CART_ITEM,
-  SELECT_ITEM
+  SELECT_ITEM,
+  SET_CURRENT_PAGE,
+  SET_COUNT_ON_PAGE
 } from "Redux/Actions/actionTypes"
+import {RESET_SEARCH, SEARCH_ITEM} from "../Actions/actionTypes";
+
 
 const initialState = {
   data: [],
+  pageData: [],
+  activePage: 1,
+  pageCount: 12,
+  pages: null,
   selected: {},
   cart: {
     orders: [],
@@ -29,10 +37,35 @@ const productReducer = (state = initialState, action) => {
     case FETCH_DATA_SUCCES:
       return {
         ...state, data: action.data, isLoading: false,
+        pages: Math.ceil(action.data.length / state.pageCount)
+
       }
     case FETCH_DATA_ERROR:
       return {
         ...state, isLoading: false, error: action.error
+      }
+    case SEARCH_ITEM:
+      return {
+        ...state,
+        data: state.data
+          .filter(el => el.name.toLowerCase().includes(
+            action.value.toLowerCase().trim()
+          ))
+      }
+
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        activePage: action.page,
+        pageData: state.data
+          .slice(action.page * state.pageCount - state.pageCount,
+            action.page * state.pageCount)
+      }
+    case SET_COUNT_ON_PAGE:
+      return {
+        ...state,
+        pageCount: action.count,
+        pages: Math.ceil(state.data.length / action.count)
       }
     case SELECT_ITEM:
       return {
@@ -46,6 +79,9 @@ const productReducer = (state = initialState, action) => {
           }
           return el
         }),
+        pageData: state.data
+          .slice(state.activePage * state.pageCount - state.pageCount,
+            state.activePage * state.pageCount),
         cart: {
           ...state.cart, orders: state.data.filter(el => !!el.inCart),
           total: state.cart.total + action.order.price

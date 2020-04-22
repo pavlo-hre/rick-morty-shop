@@ -1,9 +1,13 @@
 import React from "react"
 import {Col, Container, Row} from "react-bootstrap"
 import CardItem from "./Blocks/CardItem"
-import {addToCart, setSelected} from "Redux/Actions/product"
+import {addToCart} from "Redux/Actions/product"
 import {connect} from "react-redux"
 import {Loader} from "UI/Loader/Loader"
+import PaginationList from "../../UI/Pagination/Pagination"
+import {setCountOnPage, setCurrentPage} from "../../Redux/Actions/product"
+import SelectPageCount from "../../UI/SelectPageCount/SelectPageCount"
+import SortControls from "../SortControls/SortControls";
 
 
 const Product = props => {
@@ -22,18 +26,30 @@ const Product = props => {
         ?
         <Loader/>
         :
-        <Row xs={1} md={2} lg={3} xl={4}>
-          {props.data.map((el, i) => renderCards(el, i))}
-        </Row>
+        <>
+          <SortControls/>
+          <Row xs={1} md={2} lg={3} xl={4}>
+            {props.data.map((el, i) => renderCards(el, i))}
+          </Row>
+          <Row>
+            <PaginationList
+              activePage={props.activePage}
+              setActivePage={props.setCurrentPage}
+              pages={props.pages}
+            />
+          </Row>
+        </>
       }
     </Container>
   )
 }
 const mapStateToProps = store => ({
-  data: store.product.data,
-  loading: store.product.isLoading
+  data: store.product.pageData,
+  loading: store.product.isLoading,
+  pages: store.product.pages,
+  activePage: store.product.activePage,
 })
 
 export default connect(mapStateToProps,
-  {addToCart})(Product)
+  {addToCart, setCurrentPage})(Product)
 

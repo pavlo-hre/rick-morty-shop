@@ -12,5 +12,6 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer)
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(ReduxThunk)))
+export const store = createStore(persistedReducer,
+  composeEnhancers(applyMiddleware(ReduxThunk)))
 export const persistor = persistStore(store)

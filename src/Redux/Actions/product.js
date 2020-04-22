@@ -5,8 +5,8 @@ import {
   FETCH_DATA_ERROR,
   FETCH_DATA_START,
   FETCH_DATA_SUCCES,
-  REMOVE_CART_ITEM,
-  SELECT_ITEM,
+  REMOVE_CART_ITEM, SEARCH_ITEM,
+  SELECT_ITEM, SET_COUNT_ON_PAGE, SET_CURRENT_PAGE,
 } from "./actionTypes"
 
 const fetchStart = () => ({
@@ -27,13 +27,25 @@ export const setSelected = id => ({
 })
 
 
-export const fetchData = () => async dispatch => {
+export const fetchData = () => async (dispatch, getState) => {
   try {
     dispatch(fetchStart())
     const {data} = await axios
       .get(`https://rick-morty-3c452.firebaseio.com/heroes.json`)
-    const resData = data['-M4xVrbL-y6KiL0uMOiM']
+    let resData = data['-M5S5FeMLhIOnq7jmZ2G']
+    // const cartData = getState().product.cart.orders
+    // if(!cartData.length){
+    //   resData = resData.map(el=>{
+    //     cartData.forEach(item=>{
+    //       if(el.id===item.id){
+    //         el.inCart = item.inCart
+    //       }
+    //     })
+    //     return el
+    //   })
+    // }
     dispatch(fetchSuccess(resData))
+    dispatch(setCurrentPage(1))
   } catch (e) {
     dispatch(fetchError(e))
     console.log(e)
@@ -54,4 +66,27 @@ export const removeFromCart = order => ({
   type: REMOVE_CART_ITEM,
   order
 })
+
+
+export const setCurrentPage = page => ({
+  type: SET_CURRENT_PAGE,
+  page
+})
+
+export const setCountOnPage = count => dispatch => {
+  dispatch({
+    type: SET_COUNT_ON_PAGE,
+    count
+  })
+  dispatch(setCurrentPage(1))
+}
+
+export const searchItem = value => (dispatch, getState) => {
+  dispatch({
+    type: SEARCH_ITEM,
+    value
+  })
+  dispatch(setCountOnPage(getState().product.pageCount))
+}
+
 
