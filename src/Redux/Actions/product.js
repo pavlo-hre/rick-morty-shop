@@ -5,7 +5,7 @@ import {
   FETCH_DATA_ERROR,
   FETCH_DATA_START,
   FETCH_DATA_SUCCES,
-  REMOVE_CART_ITEM, SEARCH_ITEM,
+  REMOVE_CART_ITEM, RESET_SEARCH, SEARCH_ITEM,
   SELECT_ITEM, SET_COUNT_ON_PAGE, SET_CURRENT_PAGE,
 } from "./actionTypes"
 
@@ -33,17 +33,17 @@ export const fetchData = () => async (dispatch, getState) => {
     const {data} = await axios
       .get(`https://rick-morty-3c452.firebaseio.com/heroes.json`)
     let resData = data['-M5S5FeMLhIOnq7jmZ2G']
-    // const cartData = getState().product.cart.orders
-    // if(!cartData.length){
-    //   resData = resData.map(el=>{
-    //     cartData.forEach(item=>{
-    //       if(el.id===item.id){
-    //         el.inCart = item.inCart
-    //       }
-    //     })
-    //     return el
-    //   })
-    // }
+    const cartData = getState().product.cart.orders
+    if(cartData.length){
+      resData = resData.map(el=>{
+        cartData.forEach(item=>{
+          if(el.id===item.id){
+            el.inCart = item.inCart
+          }
+        })
+        return el
+      })
+    }
     dispatch(fetchSuccess(resData))
     dispatch(setCurrentPage(1))
   } catch (e) {
@@ -88,5 +88,7 @@ export const searchItem = value => (dispatch, getState) => {
   })
   dispatch(setCountOnPage(getState().product.pageCount))
 }
-
-
+//todo
+export const resetSearch = () => ({
+  type: RESET_SEARCH,
+})

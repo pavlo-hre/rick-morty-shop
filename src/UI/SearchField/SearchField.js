@@ -1,24 +1,14 @@
-import React, {useState} from "react"
+import React from "react"
 import {Form} from "react-bootstrap"
 
-const SearchField = ({searchItem, resetSearch}) => {
-  const [value, setValue] = useState('')
-  const onSubmit = e => {
-    if (e.key === 'Enter') {
-      searchItem(e.target.value)
-      setValue('')
-      if (value === '') {
-        resetSearch()
-      }
-    }
-  }
+const SearchField = ({searchItem, searchRequest}) => {
 
   return (
     <Form.Control
       placeholder="Enter for search"
-      value={value}
-      onChange={e => setValue(e.target.value)}
-      onKeyPress={onSubmit}/>
+      value={searchRequest}
+      onChange={e => searchItem(e.target.value)}
+    />
   )
 }
 

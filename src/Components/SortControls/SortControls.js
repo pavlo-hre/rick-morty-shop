@@ -3,7 +3,6 @@ import {Col, Form} from "react-bootstrap"
 import SelectPageCount from "../../UI/SelectPageCount/SelectPageCount"
 import {connect} from "react-redux";
 import {
-  fetchData,
   resetSearch,
   searchItem,
   setCountOnPage
@@ -17,7 +16,7 @@ const SortControls = props => {
         <Col>
           <SearchField
             searchItem={props.searchItem}
-            resetSearch={props.fetchData}
+            searchRequest={props.searchRequest}
           />
         </Col>
         <Col>
@@ -34,7 +33,8 @@ const SortControls = props => {
   )
 }
 const mapStateToProps = store => ({
-  pageCount: store.product.pageCount
+  pageCount: store.product.pageCount,
+  searchRequest: store.product.searchRequest
 })
 export default connect(mapStateToProps,
-  {setCountOnPage, searchItem, fetchData})(SortControls)
+  {setCountOnPage, searchItem})(SortControls)

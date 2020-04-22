@@ -13,11 +13,13 @@ import {RESET_SEARCH, SEARCH_ITEM} from "../Actions/actionTypes";
 
 
 const initialState = {
+  initData: [],
   data: [],
   pageData: [],
   activePage: 1,
   pageCount: 12,
   pages: null,
+  searchRequest: '',
   selected: {},
   cart: {
     orders: [],
@@ -36,7 +38,7 @@ const productReducer = (state = initialState, action) => {
       }
     case FETCH_DATA_SUCCES:
       return {
-        ...state, data: action.data, isLoading: false,
+        ...state, initData: action.data, isLoading: false, data: action.data,
         pages: Math.ceil(action.data.length / state.pageCount)
 
       }
@@ -47,10 +49,17 @@ const productReducer = (state = initialState, action) => {
     case SEARCH_ITEM:
       return {
         ...state,
-        data: state.data
-          .filter(el => el.name.toLowerCase().includes(
-            action.value.toLowerCase().trim()
-          ))
+        data: state.initData
+          .filter(el => {
+            return action.value.trim() !== ''
+              ?
+              el.name.toLowerCase().includes(
+                action.value.toLowerCase().trim()
+              )
+              :
+              true
+          }),
+        searchRequest: action.value.trim()
       }
 
     case SET_CURRENT_PAGE:
@@ -83,7 +92,8 @@ const productReducer = (state = initialState, action) => {
           .slice(state.activePage * state.pageCount - state.pageCount,
             state.activePage * state.pageCount),
         cart: {
-          ...state.cart, orders: state.data.filter(el => !!el.inCart),
+          ...state.cart,
+          orders: [...state.cart.orders, {...action.order}],
           total: state.cart.total + action.order.price
         },
       }

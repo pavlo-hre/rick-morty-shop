@@ -13,6 +13,7 @@ export const CLOSE_AUTH_MODAL = 'CLOSE_AUTH_MODAL'
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const SET_COUNT_ON_PAGE = 'SET_COUNT_ON_PAGE'
 export const SEARCH_ITEM = 'SEARCH_ITEM'
+export const RESET_SEARCH = 'RESET_SEARCH'
 
 
 
