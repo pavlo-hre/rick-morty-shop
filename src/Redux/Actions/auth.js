@@ -35,6 +35,21 @@ const autoLogOut = time => dispatch => {
   setTimeout(() => dispatch(logOut()), time * 1000)
 }
 
+export const checkAuth = () => (dispatch, getState) => {
+  const token = getState().auth.token
+  const expirationDate = getState().auth.expirationDate
+  if (!token) {
+    dispatch(logOut())
+  } else {
+    const expDate = new Date(expirationDate)
+    if (expDate <= new Date()) {
+      dispatch(logOut())
+    } else {
+      dispatch(autoLogOut((expDate.getTime() - new Date().getTime()) / 1000))
+    }
+  }
+}
+
 export const auth = (email, password, userName, isLogin) => async (dispatch) => {
   const authData = {
     email,

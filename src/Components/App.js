@@ -14,12 +14,14 @@ import Cart from "./Cart/Cart"
 import MyModal from "UI/Modal/Modal"
 import {closeAuthModal, openAuthModal} from "Redux/Actions/auth"
 import AuthFormTab from "./Auth/Tabs"
+import {checkAuth} from "../Redux/Actions/auth"
 
 
 const App = props => {
 
   useEffect(() => {
     props.fetchData()
+    props.checkAuth()
   }, [])
 
 
@@ -56,4 +58,5 @@ export default connect(mapStateToProps, {
   fetchData,
   openAuthModal,
   closeAuthModal,
+  checkAuth,
 })(App)
