@@ -1,9 +1,11 @@
 import React from "react"
 import {Button, ButtonGroup} from "react-bootstrap"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faChevronUp, faChevronDown, faTimes} from '@fortawesome/free-solid-svg-icons'
 
 
 const SortButton = props => {
-  const {sortDir, onClick, reset} = props
+  const {sortDir, onClick} = props
   return (
     <ButtonGroup>
       <Button
@@ -11,21 +13,21 @@ const SortButton = props => {
         onClick={() => onClick('asc')}
         disabled={sortDir === 'asc'}
       >
-        ASC
+        <FontAwesomeIcon icon={faChevronUp} />
       </Button>
       <Button
         variant="outline-secondary"
         onClick={() => onClick('desc')}
         disabled={sortDir === 'desc'}
       >
-        DESC
+        <FontAwesomeIcon icon={faChevronDown} />
       </Button>
       <Button
         variant="outline-secondary"
-        onClick={reset}
+        onClick={() => onClick(null)}
         disabled={!sortDir}
       >
-        X
+        <FontAwesomeIcon icon={faTimes} />
       </Button>
     </ButtonGroup>
   )

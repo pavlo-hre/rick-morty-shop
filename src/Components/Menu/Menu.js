@@ -4,6 +4,8 @@ import {
   Nav,
   Container, Badge, Button, Dropdown
 } from "react-bootstrap"
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faShoppingCart, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import {NavLink} from "react-router-dom"
 import {connect} from "react-redux"
 import {logOut} from "Redux/Actions/auth"
@@ -34,8 +36,9 @@ const Menu = props => {
 
         <NavLink
           to='/cart'
-          className='btn btn-link text-white cart-link mr-3'
-        >Cart
+          className='btn btn-link text-white cart-link mr-2'
+        >
+          <FontAwesomeIcon icon={faShoppingCart}/>
           {
             !!cartData
             &&
@@ -45,19 +48,19 @@ const Menu = props => {
 
         {authData.token
           ?
-          <Dropdown>
-            <Dropdown.Toggle
-              variant="secondary"
-              id="dropdown-basic">
+          <>
+            <Button
+              className='mr-2'
+              variant="outline-light">
               {authData.user}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Button
-                variant='light'
-                onClick={logOut}
-              >Log out</Button>
-            </Dropdown.Menu>
-          </Dropdown>
+            </Button>
+            <Button
+              variant={"outline-light"}
+              onClick={logOut}
+            >
+              <FontAwesomeIcon icon={faSignOutAlt}/>
+            </Button>
+          </>
           :
           <Button
             variant="secondary"

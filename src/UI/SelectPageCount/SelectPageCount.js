@@ -14,8 +14,6 @@ const SelectPageCount = props => {
         as="select"
         style={{width: 70}}
       >
-
-        <option selected hidden>{props.pageCount}</option>
         <option>12</option>
         <option>24</option>
         <option>48</option>

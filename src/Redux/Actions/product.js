@@ -107,19 +107,18 @@ export const syncData = () => ({
   type: SYNC_DATA,
 })
 
-
 //todo
-export const resetSearch = () => (dispatch, getState) => {
-  dispatch({
-    type: RESET_SEARCH,
-  })
-  dispatch(setCountOnPage(getState().product.pageCount))
-}
+// export const resetSearch = () => (dispatch, getState) => {
+//   dispatch({
+//     type: RESET_SEARCH,
+//   })
+//   dispatch(setCountOnPage(getState().product.pageCount))
+// }
 
-export const sortData = dir => dispatch=>{
+export const sortData = dir => (dispatch, getState)=>{
   dispatch({
     type: SORT_DATA,
     dir
   })
-  dispatch(setCurrentPage(1))
+  dispatch(searchItem(getState().product.searchRequest))
 }

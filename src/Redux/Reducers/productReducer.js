@@ -49,7 +49,6 @@ const productReducer = (state = initialState, action) => {
         initData: action.data.map(el => ({...el})),
         isLoading: false,
         pages: Math.ceil(action.data.length / state.pageCount)
-
       }
 
     case FETCH_DATA_ERROR:
@@ -86,6 +85,14 @@ const productReducer = (state = initialState, action) => {
               )
               :
               true
+          }).sort((a, b) => {
+            if (state.sortDir === 'asc') {
+              return a.price - b.price
+            }
+            if (state.sortDir === 'desc') {
+              return b.price - a.price
+            }
+            return 0
           }),
         searchRequest: action.value.trim()
       }
@@ -163,21 +170,7 @@ const productReducer = (state = initialState, action) => {
 
     case SORT_DATA:
       return {
-        ...state, data: [...state.data].sort((a, b) => {
-
-          if (action.dir === 'asc') {
-            return a.price - b.price
-          }
-          if (action.dir === 'desc') {
-            return b.price - a.price
-          }
-        }),
-        sortDir: action.dir,
-      }
-    case RESET_SEARCH:
-      return {
-        ...state, data: state.initData.map(el => ({...el})), sortDir: false,
-        searchRequest: '',
+        ...state, sortDir: action.dir,
       }
 
     default:

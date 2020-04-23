@@ -1,5 +1,7 @@
 import React from "react"
 import {Button, Container, Jumbotron, Table} from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faPlus, faMinus, faTrash} from '@fortawesome/free-solid-svg-icons'
 import {connect} from "react-redux"
 import {
   incCart,
@@ -56,19 +58,25 @@ const Cart = props => {
                   variant='secondary'
                   onClick={() => props.decCart(el)}
                   disabled={el.inCart === 1 && true}
-                >-</Button>
+                >
+                  <FontAwesomeIcon icon={faMinus}/>
+                </Button>
                 <span>{el.inCart}</span>
                 <Button
                   variant='secondary'
                   onClick={() => props.incCart(el)}
-                >+</Button>
+                >
+                  <FontAwesomeIcon icon={faPlus}/>
+                </Button>
               </td>
               <td>{el.inCart * el.price}</td>
               <td className='text-center'>
                 <Button
                   variant='danger'
                   onClick={() => props.removeFromCart(el)}
-                >&times;</Button>
+                >
+                  <FontAwesomeIcon icon={faTrash}/>
+                </Button>
               </td>
             </tr>
           )

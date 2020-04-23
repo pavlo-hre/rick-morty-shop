@@ -3,7 +3,6 @@ import {Col, Form} from "react-bootstrap"
 import SelectPageCount from "../../UI/SelectPageCount/SelectPageCount"
 import {connect} from "react-redux";
 import {
-  resetSearch,
   searchItem,
   setCountOnPage, sortData
 } from "../../Redux/Actions/product"
@@ -24,7 +23,6 @@ const SortControls = props => {
           <SortButton
             onClick={props.sortData}
             sortDir={props.sortDir}
-            reset ={props.resetSearch}
           />
         </Col>
         <Col>
@@ -43,4 +41,4 @@ const mapStateToProps = store => ({
   sortDir: store.product.sortDir
 })
 export default connect(mapStateToProps,
-  {setCountOnPage, searchItem, sortData,resetSearch})(SortControls)
+  {setCountOnPage, searchItem, sortData})(SortControls)
