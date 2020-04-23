@@ -6,7 +6,7 @@ import {
   FETCH_DATA_START,
   FETCH_DATA_SUCCES, INC_CART_ITEM,
   REMOVE_CART_ITEM, RESET_SEARCH, SEARCH_ITEM,
-  SELECT_ITEM, SET_COUNT_ON_PAGE, SET_CURRENT_PAGE, SYNC_DATA,
+  SELECT_ITEM, SET_COUNT_ON_PAGE, SET_CURRENT_PAGE, SORT_DATA, SYNC_DATA,
 } from "./actionTypes"
 
 const fetchStart = () => ({
@@ -109,8 +109,17 @@ export const syncData = () => ({
 
 
 //todo
-// export const resetSearch = () => ({
-//   type: RESET_SEARCH,
-// })
+export const resetSearch = () => (dispatch, getState) => {
+  dispatch({
+    type: RESET_SEARCH,
+  })
+  dispatch(setCountOnPage(getState().product.pageCount))
+}
 
-
+export const sortData = dir => dispatch=>{
+  dispatch({
+    type: SORT_DATA,
+    dir
+  })
+  dispatch(setCurrentPage(1))
+}

@@ -14,6 +14,7 @@ import {
   INC_CART_ITEM
 } from "Redux/Actions/actionTypes"
 import {syncData, transformCartData} from "../../Helpers/productReducerHelper"
+import {SORT_DATA} from "../Actions/actionTypes";
 
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
   pageCount: 12,
   pages: null,
   searchRequest: '',
+  sortDir: null,
   selected: {},
   cart: {
     orders: [],
@@ -158,6 +160,26 @@ const productReducer = (state = initialState, action) => {
           total: state.cart.total - action.order.price * action.order.inCart
         },
       }
+
+    case SORT_DATA:
+      return {
+        ...state, data: [...state.data].sort((a, b) => {
+
+          if (action.dir === 'asc') {
+            return a.price - b.price
+          }
+          if (action.dir === 'desc') {
+            return b.price - a.price
+          }
+        }),
+        sortDir: action.dir,
+      }
+    case RESET_SEARCH:
+      return {
+        ...state, data: state.initData.map(el => ({...el})), sortDir: false,
+        searchRequest: '',
+      }
+
     default:
       return state
   }

@@ -5,9 +5,10 @@ import {connect} from "react-redux";
 import {
   resetSearch,
   searchItem,
-  setCountOnPage
+  setCountOnPage, sortData
 } from "../../Redux/Actions/product"
 import SearchField from "../../UI/SearchField/SearchField"
+import SortButton from "../../UI/SortButton/SortButton";
 
 const SortControls = props => {
   return (
@@ -20,7 +21,11 @@ const SortControls = props => {
           />
         </Col>
         <Col>
-
+          <SortButton
+            onClick={props.sortData}
+            sortDir={props.sortDir}
+            reset ={props.resetSearch}
+          />
         </Col>
         <Col>
           <SelectPageCount
@@ -34,7 +39,8 @@ const SortControls = props => {
 }
 const mapStateToProps = store => ({
   pageCount: store.product.pageCount,
-  searchRequest: store.product.searchRequest
+  searchRequest: store.product.searchRequest,
+  sortDir: store.product.sortDir
 })
 export default connect(mapStateToProps,
-  {setCountOnPage, searchItem})(SortControls)
+  {setCountOnPage, searchItem, sortData,resetSearch})(SortControls)
