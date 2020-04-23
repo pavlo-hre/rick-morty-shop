@@ -33,17 +33,17 @@ export const fetchData = () => async (dispatch, getState) => {
     const {data} = await axios
       .get(`https://rick-morty-3c452.firebaseio.com/heroes.json`)
     let resData = data['-M5S5FeMLhIOnq7jmZ2G']
-    // const cartData = getState().product.cart.orders
-    // if(cartData.length){
-    //   resData = resData.map(el=>{
-    //     cartData.forEach(item=>{
-    //       if(el.id===item.id){
-    //         el.inCart = item.inCart
-    //       }
-    //     })
-    //     return el
-    //   })
-    // }
+    const cartData = getState().product.cart.orders
+    if (cartData.length) {
+      resData = resData.map(el => {
+        cartData.forEach(item => {
+          if (el.id === item.id) {
+            el.inCart = item.inCart
+          }
+        })
+        return el
+      })
+    }
     dispatch(fetchSuccess(resData))
     dispatch(syncData())
   } catch (e) {
@@ -115,7 +115,7 @@ export const syncData = () => ({
 //   dispatch(setCountOnPage(getState().product.pageCount))
 // }
 
-export const sortData = dir => (dispatch, getState)=>{
+export const sortData = dir => (dispatch, getState) => {
   dispatch({
     type: SORT_DATA,
     dir
