@@ -14,7 +14,8 @@ import {
   INC_CART_ITEM
 } from "Redux/Actions/actionTypes"
 import {syncData, transformCartData} from "../../Helpers/productReducerHelper"
-import {SORT_DATA} from "../Actions/actionTypes";
+import {FILTER_DATA, RESET_FILTER, SORT_DATA} from "../Actions/actionTypes";
+import {createFilter, filterData} from "../../Helpers/filterHelper";
 
 
 const initialState = {
@@ -25,6 +26,7 @@ const initialState = {
   pageCount: 12,
   pages: null,
   searchRequest: '',
+  filterSettings: {},
   sortDir: null,
   selected: {},
   cart: {
@@ -76,16 +78,37 @@ const productReducer = (state = initialState, action) => {
     case SEARCH_ITEM:
       return {
         ...state,
-        data: state.initData
-          .filter(el => {
-            return action.value.trim() !== ''
-              ?
-              el.name.toLowerCase().includes(
-                action.value.toLowerCase().trim()
-              )
-              :
-              true
-          }).sort((a, b) => {
+        //todo
+        data: Object.keys(state.filterSettings).length ?
+          state.data
+            .filter(el => {
+              return action.value.trim() !== ''
+                ?
+                el.name.toLowerCase().includes(
+                  action.value.toLowerCase().trim()
+                )
+                :
+                true
+            }).sort((a, b) => {
+            if (state.sortDir === 'asc') {
+              return a.price - b.price
+            }
+            if (state.sortDir === 'desc') {
+              return b.price - a.price
+            }
+            return 0
+          })
+          :
+          state.initData
+            .filter(el => {
+              return action.value.trim() !== ''
+                ?
+                el.name.toLowerCase().includes(
+                  action.value.toLowerCase().trim()
+                )
+                :
+                true
+            }).sort((a, b) => {
             if (state.sortDir === 'asc') {
               return a.price - b.price
             }
@@ -171,6 +194,16 @@ const productReducer = (state = initialState, action) => {
     case SORT_DATA:
       return {
         ...state, sortDir: action.dir,
+      }
+    case FILTER_DATA:
+      return {
+        ...state,
+        filterSettings: createFilter(state.filterSettings, action.filter.name, action.filter.value),
+        data: filterData(state.initData,
+          createFilter(state.filterSettings, action.filter.name, action.filter.value)
+        ),
+        sortDir: null,
+        searchRequest: '',
       }
 
     default:

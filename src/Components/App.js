@@ -15,6 +15,7 @@ import MyModal from "UI/Modal/Modal"
 import {closeAuthModal, openAuthModal} from "Redux/Actions/auth"
 import AuthFormTab from "./Auth/Tabs"
 import {checkAuth} from "../Redux/Actions/auth"
+import SideBarFilter from "./SideBarFilter/SideBarFilter";
 
 
 const App = props => {

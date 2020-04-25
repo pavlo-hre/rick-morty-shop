@@ -22,6 +22,12 @@ const CardItem = ({card, onAddHandler}) => {
             to={`/product/${card.id}`}
           >
             <Card.Title className='text-white'>{card.name}</Card.Title>
+
+            Status: <strong>{card.status}</strong><br/>
+            Gender: <strong>{card.gender}</strong><br/>
+            Species: <strong>{card.species}</strong>
+
+
           </Link>
           {card.inCart
             ? <Link

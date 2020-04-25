@@ -8,4 +8,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export const store = createStore(reducer,
   composeEnhancers(applyMiddleware(ReduxThunk)))
+
+// export const store = createStore(reducer,
+//   applyMiddleware(ReduxThunk))
+
 export const persistor = persistStore(store)
+
+
+

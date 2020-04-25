@@ -4,8 +4,8 @@ import {
   DEC_CART_ITEM,
   FETCH_DATA_ERROR,
   FETCH_DATA_START,
-  FETCH_DATA_SUCCES, INC_CART_ITEM,
-  REMOVE_CART_ITEM, RESET_SEARCH, SEARCH_ITEM,
+  FETCH_DATA_SUCCES, FILTER_DATA, INC_CART_ITEM,
+  REMOVE_CART_ITEM, RESET_FILTER, RESET_SEARCH, SEARCH_ITEM,
   SELECT_ITEM, SET_COUNT_ON_PAGE, SET_CURRENT_PAGE, SORT_DATA, SYNC_DATA,
 } from "./actionTypes"
 
@@ -122,3 +122,16 @@ export const sortData = dir => (dispatch, getState) => {
   })
   dispatch(searchItem(getState().product.searchRequest))
 }
+
+
+export const filterData = filter => (dispatch, getState) => {
+  dispatch({
+    type: FILTER_DATA,
+    filter
+  })
+  dispatch(setCountOnPage(getState().product.pageCount))
+}
+
+export const resetFilter = () => ({
+  type: RESET_FILTER
+})

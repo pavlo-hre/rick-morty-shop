@@ -13,7 +13,7 @@ const cartPersistConfig = {
   key: 'cart',
   storage: storage,
   blacklist: ['data', 'initData', 'pageData', 'activePage', 'error', 'isLoading',
-    'pageCount', 'pages', 'searchRequest', 'selected', 'sortDir', '_persist'
+    'pageCount', 'pages', 'searchRequest', 'selected', 'sortDir', '_persist', 'filterSettings'
   ]
 }
 

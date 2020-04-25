@@ -17,6 +17,8 @@ export const SEARCH_ITEM = 'SEARCH_ITEM'
 export const RESET_SEARCH = 'RESET_SEARCH'
 export const SYNC_DATA = 'SYNC_DATA'
 export const SORT_DATA = 'SORT_DATA'
+export const FILTER_DATA = 'FILTER_DATA'
+export const RESET_FILTER = 'RESET_FILTER'
 
 
 

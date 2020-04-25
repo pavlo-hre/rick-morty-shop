@@ -7,6 +7,7 @@ import {Loader} from "UI/Loader/Loader"
 import PaginationList from "../../UI/Pagination/Pagination"
 import {setCountOnPage, setCurrentPage} from "../../Redux/Actions/product"
 import SortControls from "../SortControls/SortControls";
+import SideBarFilter from "../SideBarFilter/SideBarFilter";
 
 
 const Product = props => {
@@ -35,8 +36,15 @@ const Product = props => {
               {props.searchRequest && `Characters found ${props.reqResData.length} `}
             </Col>
           </Row>
-          <Row xs={1} md={2} lg={3} xl={4}>
-            {props.data.map((el, i) => renderCards(el, i))}
+          <Row>
+            <Col md={2}>
+              <SideBarFilter/>
+            </Col>
+            <Col md={10}>
+              <Row xs={1} md={2} lg={3} xl={4}>
+                {props.data.map((el, i) => renderCards(el, i))}
+              </Row>
+            </Col>
           </Row>
           <Row>
             <PaginationList
