@@ -1,18 +1,19 @@
 import React from "react"
 import {Button, Container, Jumbotron, Table} from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlus, faMinus, faTrash} from '@fortawesome/free-solid-svg-icons'
 import {connect} from "react-redux"
 import {
   incCart,
   decCart,
-  removeFromCart, setSelected
-} from "Redux/Actions/product"
+  removeFromCart
+} from "Redux/Actions/cart"
 import {Link} from "react-router-dom"
+import {getOrders} from "../../Redux/Selectors/selectors";
 
 
 const Cart = props => {
-  if (!props.cartData.orders.length) {
+  if (!props.orders.length) {
     return (<Container>
       <Jumbotron className='text-center'>
         <h1>Cart is empty!</h1>
@@ -39,7 +40,7 @@ const Cart = props => {
         </tr>
         </thead>
         <tbody>
-        {props.cartData.orders.map((el, i) => {
+        {props.orders.map((el, i) => {
           return (
             <tr key={el.id}>
               <td>{i + 1}</td>
@@ -87,9 +88,9 @@ const Cart = props => {
         <tr>
           <td colSpan={3}>Total</td>
           <td>
-            {props.cartData.orders.reduce((acc, el) => acc + el.inCart, 0)}
+            {/*{propsorders.reduce((acc, el) => acc + el.inCart, 0)}*/}
           </td>
-          <td>{props.cartData.total}</td>
+          {/*<td>{props.cartData.total}</td>*/}
         </tr>
         </tfoot>
       </Table>
@@ -101,13 +102,12 @@ const Cart = props => {
     </Container>
   )
 }
-const mapStateToProps = store => ({
-  cartData: store.product.cart
+const mapStateToProps = state => ({
+  orders: getOrders(state)
 })
 
 export default connect(mapStateToProps, {
   incCart,
   decCart,
-  removeFromCart,
-  setSelected
+  removeFromCart
 })(Cart)

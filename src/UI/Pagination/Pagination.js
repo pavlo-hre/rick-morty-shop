@@ -2,6 +2,7 @@ import React from "react"
 import {Pagination} from "react-bootstrap"
 
 const PaginationList = props => {
+
   const {activePage, setActivePage, pages} = props
 
   return (

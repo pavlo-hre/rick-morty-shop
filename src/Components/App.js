@@ -55,9 +55,11 @@ const mapStateToProps = state => ({
   cartData: state.product.cart.orders,
   authModalShow: state.auth.isModalOpen
 })
-export default connect(mapStateToProps, {
+
+const mapDispatchToProps = {
   fetchData,
   openAuthModal,
   closeAuthModal,
   checkAuth,
-})(App)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)
