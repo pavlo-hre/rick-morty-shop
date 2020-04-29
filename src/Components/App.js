@@ -35,7 +35,7 @@ const App = props => {
         <MyModal
           show={props.authModalShow}
           onHide={props.closeAuthModal}
-          modaltitle='Log in'
+          modaltitle='Авторизация'
         >
           <AuthFormTab/>
         </MyModal>
@@ -52,7 +52,6 @@ const App = props => {
   );
 }
 const mapStateToProps = state => ({
-  cartData: state.product.cart.orders,
   authModalShow: state.auth.isModalOpen
 })
 

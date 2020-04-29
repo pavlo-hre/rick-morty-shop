@@ -7,11 +7,11 @@ const SelectPageCount = props => {
   }
   return (
 
-    <Form.Group className='d-flex justify-content-end'>
+    <Form.Group>
       <Form.Control
         onChange={onSelect}
         as="select"
-        style={{width: 70}}
+        style={{minWidth: 70, width: '100%'}}
       >
         <option value={12}>12</option>
         <option value={24}>24</option>

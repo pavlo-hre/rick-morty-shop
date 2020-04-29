@@ -11,7 +11,7 @@ import {
 import {connect} from "react-redux"
 import {Link, withRouter} from "react-router-dom"
 import {compose} from "redux"
-import {addToCart, setSelected} from "Redux/Actions/product"
+import {setSelected} from "Redux/Actions/product"
 
 
 const ProductDetails = props => {
@@ -68,6 +68,5 @@ const mapStateToProps = store => ({
   detailInfo: store.product.selected,
 })
 export default compose(connect(mapStateToProps, {
-  addToCart,
   setSelected
 }), withRouter)(ProductDetails)

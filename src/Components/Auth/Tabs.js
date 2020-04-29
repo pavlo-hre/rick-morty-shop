@@ -8,10 +8,10 @@ const AuthFormTab = () => {
     <Tabs
       efaultActiveKey="Sign in" id="uncontrolled-tab-example"
     >
-      <Tab eventKey="Sign in" title="Sign in">
+      <Tab eventKey="Sign in" title="Вход">
         <AuthForm isLogin={true}/>
       </Tab>
-      <Tab eventKey="Sign up" title="Sign up">
+      <Tab eventKey="Sign up" title="Регистрация">
         <AuthForm isLogin={false}/>
       </Tab>
     </Tabs>

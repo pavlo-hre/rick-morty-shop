@@ -3,25 +3,27 @@ import {Button, Container, Jumbotron, Table} from 'react-bootstrap'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlus, faMinus, faTrash} from '@fortawesome/free-solid-svg-icons'
 import {connect} from "react-redux"
+import {Link} from "react-router-dom"
+
 import {
   incCart,
   decCart,
-  removeFromCart
+  removeFromCart,
+  resetCart
 } from "Redux/Actions/cart"
-import {Link} from "react-router-dom"
-import {getOrders} from "../../Redux/Selectors/selectors";
+import {getOrders, getTotalCart} from "../../Redux/Selectors/selectors"
 
 
 const Cart = props => {
   if (!props.orders.length) {
     return (<Container>
       <Jumbotron className='text-center'>
-        <h1>Cart is empty!</h1>
+        <h1>Корзина пуста!</h1>
         <p className='pt-3'>
           <Link
             className='btn btn-outline-primary'
             to='/'
-          >Back to catalog</Link>
+          >Вернуться в каталог</Link>
         </p>
       </Jumbotron>
     </Container>)
@@ -32,10 +34,10 @@ const Cart = props => {
         <thead>
         <tr className='text-center'>
           <th style={{width: '5%'}}>#</th>
-          <th style={{width: '60%'}}>Product</th>
-          <th style={{width: '5%'}}>Price</th>
-          <th style={{width: '10%'}}>Count</th>
-          <th style={{width: '5%'}}>Sum</th>
+          <th style={{width: '60%'}}>Товар</th>
+          <th style={{width: '5%'}}>Цена</th>
+          <th style={{width: '10%'}}>Количество</th>
+          <th style={{width: '5%'}}>Сумма</th>
           <th style={{width: '5%'}}></th>
         </tr>
         </thead>
@@ -58,11 +60,11 @@ const Cart = props => {
                 <Button
                   variant='secondary'
                   onClick={() => props.decCart(el)}
-                  disabled={el.inCart === 1 && true}
+                  disabled={el.count === 1}
                 >
                   <FontAwesomeIcon icon={faMinus}/>
                 </Button>
-                <span>{el.inCart}</span>
+                <span>{el.count}</span>
                 <Button
                   variant='secondary'
                   onClick={() => props.incCart(el)}
@@ -70,7 +72,7 @@ const Cart = props => {
                   <FontAwesomeIcon icon={faPlus}/>
                 </Button>
               </td>
-              <td>{el.inCart * el.price}</td>
+              <td>{el.count * el.price}</td>
               <td className='text-center'>
                 <Button
                   variant='danger'
@@ -86,28 +88,41 @@ const Cart = props => {
         </tbody>
         <tfoot>
         <tr>
-          <td colSpan={3}>Total</td>
+          <td colSpan={3}>Всего</td>
           <td>
-            {/*{propsorders.reduce((acc, el) => acc + el.inCart, 0)}*/}
+            {props.orders.reduce((acc, el) => acc + el.count, 0)}
           </td>
-          {/*<td>{props.cartData.total}</td>*/}
+          <td>{props.total}</td>
         </tr>
         </tfoot>
       </Table>
       <div className='d-flex justify-content-end'>
         <Button
+          variant="danger"
+          className='mr-2'
+          onClick={props.resetCart}
+        >
+          Очистить корзину
+        </Button>
+        <Button
           variant="success"
-          className='px-5'
-        >Pay</Button></div>
+        >
+          Оформить заказ
+        </Button>
+      </div>
     </Container>
   )
 }
 const mapStateToProps = state => ({
-  orders: getOrders(state)
+  orders: getOrders(state),
+  total: getTotalCart(state)
 })
 
-export default connect(mapStateToProps, {
+const mapDispatchToProps = {
   incCart,
   decCart,
-  removeFromCart
-})(Cart)
+  removeFromCart,
+  resetCart
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

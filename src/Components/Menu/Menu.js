@@ -2,16 +2,17 @@ import React, {useEffect} from "react"
 import {
   Navbar,
   Nav,
-  Container, Badge, Button, Dropdown
+  Container, Badge, Button
 } from "react-bootstrap"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faShoppingCart, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import {NavLink} from "react-router-dom"
 import {connect} from "react-redux"
 import {logOut} from "Redux/Actions/auth"
+import {getAuthData, getOrders} from "../../Redux/Selectors/selectors"
 
 const Menu = props => {
-  const {authData, modalHide, cartData, logOut, modalOpen} = props
+  const {authData, modalHide, orders, logOut, modalOpen} = props
   useEffect(() => {
     if (authData.token) {
       modalHide()
@@ -28,9 +29,9 @@ const Menu = props => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <NavLink to="/" exact
-                     className='btn btn-link text-white'>Catalog</NavLink>
+                     className='btn btn-link text-white'>Каталог</NavLink>
             <NavLink to="/news"
-                     className='btn btn-link text-white'>News</NavLink>
+                     className='btn btn-link text-white'>Новости</NavLink>
           </Nav>
         </Navbar.Collapse>
 
@@ -40,9 +41,9 @@ const Menu = props => {
         >
           <FontAwesomeIcon icon={faShoppingCart}/>
           {
-            !!cartData
+            !!orders.length
             &&
-            <Badge variant='danger'>{cartData}</Badge>
+            <Badge variant='danger'>{orders.length}</Badge>
           }
         </NavLink>
 
@@ -54,6 +55,7 @@ const Menu = props => {
               variant="outline-light">
               {authData.user}
             </Button>
+
             <Button
               variant={"outline-light"}
               onClick={logOut}
@@ -66,16 +68,17 @@ const Menu = props => {
             variant="secondary"
             onClick={modalOpen}
           >
-            Login
+            Войти
           </Button>
         }
       </Container>
     </Navbar>
   )
 }
+
 const mapStateToProps = state => ({
-  cartData: state.product.cart.orders.length,
-  authData: state.auth
+  orders: getOrders(state),
+  authData: getAuthData(state)
 })
 
 export default connect(mapStateToProps, {logOut})(Menu)

@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button"
 import {Badge, ListGroup} from "react-bootstrap"
 import {Link} from "react-router-dom"
 
-const CardItem = ({card, onAddHandler}) => {
+const CardItem = ({card, onAddHandler, isProductInCart}) => {
   const [isFlipped, changeFlipped] = useState(false)
   const onClickFlip = () => {
     changeFlipped(!isFlipped)
@@ -29,16 +29,16 @@ const CardItem = ({card, onAddHandler}) => {
 
 
           </Link>
-          {card.inCart
+          {isProductInCart
             ? <Link
               to='/cart'
               className='btn btn-warning'
-            >Go to Cart</Link>
+            >В корзине</Link>
             :
             <Button
               variant="success"
               onClick={() => onAddHandler(card)}
-            >Add to cart</Button>
+            >Добавить в корзину</Button>
           }
         </Card.Body>
       </Card>

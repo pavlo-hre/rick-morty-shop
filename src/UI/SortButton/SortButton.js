@@ -1,34 +1,44 @@
 import React from "react"
-import {Button, ButtonGroup} from "react-bootstrap"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faChevronUp, faChevronDown, faTimes} from '@fortawesome/free-solid-svg-icons'
+import {
+  ButtonGroup,
+  ToggleButton
+} from "react-bootstrap"
 
 
 const SortButton = props => {
   const {sortDir, onClick} = props
   return (
-    <ButtonGroup>
-      <Button
+    <ButtonGroup toggle>
+      <ToggleButton
         variant="outline-secondary"
-        onClick={() => onClick('asc')}
-        disabled={sortDir === 'asc'}
+        type="radio"
+        name="sort"
+        value='all'
+        onChange={() => onClick(null)}
+        checked={!sortDir}
       >
-        <FontAwesomeIcon icon={faChevronUp} />
-      </Button>
-      <Button
+        По умолчанию
+      </ToggleButton>
+      <ToggleButton
         variant="outline-secondary"
-        onClick={() => onClick('desc')}
-        disabled={sortDir === 'desc'}
+        type="radio"
+        name="sort"
+        value="asc"
+        onChange={e => onClick(e.target.value)}
+        checked={sortDir === 'asc'}
       >
-        <FontAwesomeIcon icon={faChevronDown} />
-      </Button>
-      <Button
+        Сначала дешевые
+      </ToggleButton>
+      <ToggleButton
         variant="outline-secondary"
-        onClick={() => onClick(null)}
-        disabled={!sortDir}
+        type="radio"
+        name="sort"
+        value="desc"
+        onChange={e => onClick(e.target.value)}
+        checked={sortDir === 'desc'}
       >
-        <FontAwesomeIcon icon={faTimes} />
-      </Button>
+        Сначала дорогие
+      </ToggleButton>
     </ButtonGroup>
   )
 }

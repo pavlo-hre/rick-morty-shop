@@ -34,8 +34,6 @@ export const fetchData = () => async (dispatch, getState) => {
 }
 
 
-
-
 export const setSelected = id => ({
   type: SELECT_ITEM,
   id
@@ -43,36 +41,6 @@ export const setSelected = id => ({
 
 /////
 
-
-export const addToCart = order => dispatch => {
-  dispatch({
-    type: ADD_TO_CART,
-    order
-  })
-  dispatch(syncData())
-}
-export const incCart = order => dispatch => {
-  dispatch({
-    type: INC_CART_ITEM,
-    order
-  })
-  dispatch(syncData())
-}
-export const decCart = order => dispatch => {
-  dispatch({
-    type: DEC_CART_ITEM,
-    order
-  })
-  dispatch(syncData())
-}
-
-export const removeFromCart = order => dispatch => {
-  dispatch({
-    type: REMOVE_CART_ITEM,
-    order
-  })
-  dispatch(syncData())
-}
 
 // export const setCurrentPage = page => ({
 //   type: SET_CURRENT_PAGE,
@@ -107,13 +75,7 @@ export const syncData = () => ({
 //   dispatch(setCountOnPage(getState().product.pageCount))
 // }
 
-export const sortData = dir => (dispatch, getState) => {
-  dispatch({
-    type: SORT_DATA,
-    dir
-  })
-  dispatch(searchItem(getState().product.searchRequest))
-}
+
 
 
 export const filterData = filter => (dispatch, getState) => {

@@ -10,20 +10,27 @@ import SortControls from "../SortControls/SortControls";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 
 import {
-  getActivePage, getPageData, getPages,
-  getProducts,
+  getActivePage, getIsLoading, getOrders, getPageData, getPages
 } from "../../Redux/Selectors/selectors"
 import {setCurrentPage} from "../../Redux/Actions/pages"
+import {logOut} from "../../Redux/Actions/auth";
+import SelectPageCount from "../../UI/SelectPageCount/SelectPageCount";
 
 const Product = props => {
-  const renderCards = (el, i) => (
-    <Col key={el.id}>
+
+  const getProductsInCart = (cartData, product) => cartData.some(el => el.id === product.id)
+
+  const renderCards = (el, i, orders) => {
+    return <Col key={el.id}>
       <CardItem
         card={el}
         index={i}
-        onAddHandler={props.addToCart}/>
+        onAddHandler={props.addToCart}
+        isProductInCart={getProductsInCart(orders, el)}
+      />
     </Col>
-  )
+  }
+
   return (
     <Container>
       {props.loading
@@ -31,29 +38,26 @@ const Product = props => {
         <Loader/>
         :
         <>
-          <SortControls/>
-          <Row>
-            <PaginationList
-              activePage={props.activePage}
-              setActivePage={props.setCurrentPage}
-              pages={props.pages}
-            />
-          </Row>
-          <Row>
-            <Col
-              className='text-center mb-1'
-              style={{height: 25}}
-            >
-              {props.searchRequest && `Characters found ${props.reqResData.length} `}
-            </Col>
-          </Row>
           <Row>
             <Col md={2}>
               {/*<SideBarFilter/>*/}
             </Col>
             <Col md={10}>
+
+              <SortControls/>
+
               <Row xs={1} md={2} lg={3} xl={4}>
-                {props.data.map((el, i) => renderCards(el, i))}
+                {props.data.map((el, i) => renderCards(el, i, props.orders))}
+              </Row>
+
+              <Row>
+                <Col>
+                  <PaginationList
+                    activePage={props.activePage}
+                    setActivePage={props.setCurrentPage}
+                    pages={props.pages}
+                  />
+                </Col>
               </Row>
             </Col>
           </Row>
@@ -67,8 +71,10 @@ const mapStateToProps = state => ({
   data: getPageData(state),
   pages: getPages(state),
   activePage: getActivePage(state),
+  orders: getOrders(state),
+  loading: getIsLoading(state),
 
-  reqResData: state.product.data, loading: state.product.isLoading,
+  reqResData: state.product.data,
   searchRequest: state.product.searchRequest
 })
 

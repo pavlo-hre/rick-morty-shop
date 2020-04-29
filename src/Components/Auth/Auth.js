@@ -4,6 +4,7 @@ import {Formik} from 'formik'
 import * as Yup from 'yup'
 import {auth} from "Redux/Actions/auth"
 import {connect} from "react-redux"
+import {getAuthData} from "../../Redux/Selectors/selectors"
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -13,7 +14,7 @@ const schema = Yup.object().shape({
     .min(7, 'Too Short!')
     .max(20, 'Too Long!')
     .required('Required'),
-});
+})
 
 const AuthForm = props => {
   return (
@@ -41,10 +42,10 @@ const AuthForm = props => {
               null
               :
               <Form.Group>
-                <Form.Label>Name</Form.Label>
+                <Form.Label>Имя пользователя</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder="Введите ваше имя"
                   name="userName"
                   value={values.userName}
                   onChange={handleChange}
@@ -56,10 +57,10 @@ const AuthForm = props => {
               </Form.Group>
             }
             <Form.Group>
-              <Form.Label>Login</Form.Label>
+              <Form.Label>E-mail</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Введите ваш email"
                 name="email"
                 value={values.email}
                 onChange={handleChange}
@@ -70,10 +71,10 @@ const AuthForm = props => {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Пароль</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Enter password"
+                placeholder="Введите пароль"
                 name="password"
                 value={values.password}
                 onChange={handleChange}
@@ -93,7 +94,7 @@ const AuthForm = props => {
             <Button
               type="submit"
               variant='success'
-            >Log in</Button>
+            >Войти</Button>
           </Form>
         )}
       </Formik>
@@ -101,7 +102,7 @@ const AuthForm = props => {
   )
 }
 const mapStateToProps = state => ({
-  errorMessage: state.auth.error
+  errorMessage: getAuthData(state).error
 })
 
 export default connect(mapStateToProps, {auth})(AuthForm)

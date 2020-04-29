@@ -6,7 +6,7 @@ const PaginationList = props => {
   const {activePage, setActivePage, pages} = props
 
   return (
-    <Pagination className='mx-auto'>
+    <Pagination>
       <Pagination.First
         disabled={activePage === 1 ? true : false}
         onClick={() => {
