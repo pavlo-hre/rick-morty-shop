@@ -1,11 +1,14 @@
-import {SEARCH_ITEM, SORT_DATA} from "../Actions/actionTypes"
+import {
+  FILTER_DATA,
+  RESET_FILTER,
+  SEARCH_ITEM,
+  SORT_DATA
+} from "../Actions/actionTypes"
 
 const initialState = {
   searchQuery: '',
   sortDir: null,
-
-
-  // selected: {},
+  param: null
 }
 
 export const filterReducer = (state = initialState, {type, payload}) => {
@@ -17,6 +20,14 @@ export const filterReducer = (state = initialState, {type, payload}) => {
     case SEARCH_ITEM:
       return {
         ...state, searchQuery: payload
+      }
+    case FILTER_DATA:
+      return {
+        ...state, param: Object.keys(payload).length ? payload : null
+      }
+    case RESET_FILTER:
+      return {
+        ...state, param: null
       }
     default:
       return state

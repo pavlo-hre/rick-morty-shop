@@ -39,53 +39,8 @@ export const setSelected = id => ({
   id
 })
 
-/////
-
-
-// export const setCurrentPage = page => ({
-//   type: SET_CURRENT_PAGE,
-//   page
-// })
-
-// export const setCountOnPage = count => dispatch => {
-//   dispatch({
-//     type: SET_COUNT_ON_PAGE,
-//     count
-//   })
-//   dispatch(setCurrentPage(1))
-// }
-
-export const searchItem = value => (dispatch, getState) => {
-  dispatch({
-    type: SEARCH_ITEM,
-    value
-  })
-  dispatch(setCountOnPage(getState().product.pageCount))
-}
-
-export const syncData = () => ({
-  type: SYNC_DATA,
-})
-
-//todo
-// export const resetSearch = () => (dispatch, getState) => {
-//   dispatch({
-//     type: RESET_SEARCH,
-//   })
-//   dispatch(setCountOnPage(getState().product.pageCount))
-// }
 
 
 
 
-export const filterData = filter => (dispatch, getState) => {
-  dispatch({
-    type: FILTER_DATA,
-    filter
-  })
-  dispatch(setCountOnPage(getState().product.pageCount))
-}
 
-export const resetFilter = () => ({
-  type: RESET_FILTER
-})

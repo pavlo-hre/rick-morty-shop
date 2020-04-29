@@ -1,27 +1,17 @@
-import React, {useState} from "react"
-import {createFilter} from "../../Helpers/filterHelper";
-import {Button, Form} from "react-bootstrap";
-import {filterData, resetFilter} from "../../Redux/Actions/product";
-import {connect} from "react-redux";
+import React from "react"
+import {Button, Form} from "react-bootstrap"
+import {filterData, resetFilters} from "../../Redux/Actions/filter"
+import {connect} from "react-redux"
+import {getFilterSettings} from "../../Redux/Selectors/selectors"
 
 
-const SideBarFilter = ({filterData, resetFilter}) => {
+const SideBarFilter = ({filterData, resetFilters, filter}) => {
+
   const gender = ["Male", "Female", "unknown", "Genderless"]
   const status = ["Alive", "unknown", "Dead"]
   const species = ["Human", "Alien", "Humanoid", "unknown", "Poopybutthole",
     "Mytholog", "Animal", "Vampire", "Robot", "Cronenberg", "Disease", "Parasite"
   ]
-
-  // const [filterSettings, setFilterSettings] = useState({})
-  // const isFilterActive = !!Object.keys(filterSettings).length
-  // console.log(filterSettings)
-  // const onReset = () => {
-  //   setFilterSettings({})
-  //   resetFilter()
-  // }
-  // const onFilter = () => {
-  //   filterData(filterSettings)
-  // }
 
   const renderCheckbox = (filters, name) => filters.map((item, index) => (
     <div
@@ -33,15 +23,19 @@ const SideBarFilter = ({filterData, resetFilter}) => {
         id={item + index}
         value={item}
         name={name}
-        onInput={(e) => {
-          filterData(e.target)
+        onInput={e => {
+          filterData({name: e.target.name, value: e.target.value})
         }}
       />
-      <label className="custom-control-label" htmlFor={item + index}>
+      <label
+        className="custom-control-label"
+        htmlFor={item + index}
+      >
         {item}
       </label>
     </div>
   ))
+
   return (
     <Form>
       <fieldset>
@@ -56,25 +50,23 @@ const SideBarFilter = ({filterData, resetFilter}) => {
         <legend>Species</legend>
         {renderCheckbox(species, 'species')}
       </fieldset>
-      {/*<Button*/}
-      {/*  type='button'*/}
-      {/*  variant='success'*/}
-      {/*  // onClick={onFilter}*/}
-      {/*  // disabled={!isFilterActive}*/}
-      {/*>*/}
-      {/*  Filter*/}
-      {/*</Button>*/}
-
-      {/*<Button*/}
-      {/*  type='reset'*/}
-      {/*  variant='warning'*/}
-      {/*  // onClick={onReset}*/}
-      {/*>*/}
-      {/*  Reset*/}
-      {/*</Button>*/}
+      <Button
+        type='reset'
+        variant='outline-danger'
+        className='mt-2'
+        onClick={resetFilters}
+      >
+        Сбросить фильтр
+      </Button>
     </Form>
   )
 }
 
-export default connect(null, {filterData, resetFilter})(SideBarFilter)
+const mapStateToProps = state => ({
+  filter: getFilterSettings(state)
+})
+
+const mapDispatchToProps = {filterData, resetFilters}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBarFilter)
 

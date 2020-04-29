@@ -38,7 +38,7 @@ const CardItem = ({card, onAddHandler, isProductInCart}) => {
             <Button
               variant="success"
               onClick={() => onAddHandler(card)}
-            >Добавить в корзину</Button>
+            >Купить</Button>
           }
         </Card.Body>
       </Card>

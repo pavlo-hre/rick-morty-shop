@@ -6,13 +6,12 @@ export const filterData = (data, filterSettings) => data.filter(el => {
   return res
 })
 
-export const createFilter = (filterSettings, name, value, checked) => {
+export const createFilter = (filterSettings, name, value) => {
   let filter = {...filterSettings}
   if (name in filter) {
     let filterParams
     if (filter[name].indexOf(value) !== -1) {
       filterParams = filter[name].filter(item => item !== value)
-
       if (filterParams.length === 0) {
         delete filter[name]
         return {...filter}

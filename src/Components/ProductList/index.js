@@ -40,12 +40,10 @@ const Product = props => {
         <>
           <Row>
             <Col md={2}>
-              {/*<SideBarFilter/>*/}
+              <SideBarFilter/>
             </Col>
             <Col md={10}>
-
               <SortControls/>
-
               <Row xs={1} md={2} lg={3} xl={4}>
                 {props.data.map((el, i) => renderCards(el, i, props.orders))}
               </Row>

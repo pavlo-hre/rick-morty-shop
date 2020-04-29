@@ -3,6 +3,8 @@ import {
   ButtonGroup,
   ToggleButton
 } from "react-bootstrap"
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faSortAmountDown, faSortAmountDownAlt, faRandom} from '@fortawesome/free-solid-svg-icons'
 
 
 const SortButton = props => {
@@ -17,7 +19,7 @@ const SortButton = props => {
         onChange={() => onClick(null)}
         checked={!sortDir}
       >
-        По умолчанию
+        <FontAwesomeIcon icon={faRandom} className='ml-1'/>
       </ToggleButton>
       <ToggleButton
         variant="outline-secondary"
@@ -27,7 +29,8 @@ const SortButton = props => {
         onChange={e => onClick(e.target.value)}
         checked={sortDir === 'asc'}
       >
-        Сначала дешевые
+        Цена
+        <FontAwesomeIcon icon={faSortAmountDownAlt} className='ml-1'/>
       </ToggleButton>
       <ToggleButton
         variant="outline-secondary"
@@ -37,7 +40,8 @@ const SortButton = props => {
         onChange={e => onClick(e.target.value)}
         checked={sortDir === 'desc'}
       >
-        Сначала дорогие
+        Цена
+        <FontAwesomeIcon icon={faSortAmountDown} className='ml-1'/>
       </ToggleButton>
     </ButtonGroup>
   )
