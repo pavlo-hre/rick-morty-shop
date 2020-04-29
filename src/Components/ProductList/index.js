@@ -10,7 +10,7 @@ import SortControls from "../SortControls/SortControls";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 
 import {
-  getActivePage, getIsLoading, getOrders, getPageData, getPages
+  getActivePage, getIsLoading, getOrders, getPageData, getPages, searchProduct
 } from "../../Redux/Selectors/selectors"
 import {setCurrentPage} from "../../Redux/Actions/pages"
 import {logOut} from "../../Redux/Actions/auth";
@@ -49,16 +49,21 @@ const Product = props => {
               <Row xs={1} md={2} lg={3} xl={4}>
                 {props.data.map((el, i) => renderCards(el, i, props.orders))}
               </Row>
-
-              <Row>
-                <Col>
-                  <PaginationList
-                    activePage={props.activePage}
-                    setActivePage={props.setCurrentPage}
-                    pages={props.pages}
-                  />
-                </Col>
-              </Row>
+              {
+                props.allData.length
+                  ?
+                  <Row>
+                    <Col>
+                      <PaginationList
+                        activePage={props.activePage}
+                        setActivePage={props.setCurrentPage}
+                        pages={props.pages}
+                      />
+                    </Col>
+                  </Row>
+                  :
+                  null
+              }
             </Col>
           </Row>
 
@@ -73,6 +78,7 @@ const mapStateToProps = state => ({
   activePage: getActivePage(state),
   orders: getOrders(state),
   loading: getIsLoading(state),
+  allData: searchProduct(state),
 
   reqResData: state.product.data,
   searchRequest: state.product.searchRequest

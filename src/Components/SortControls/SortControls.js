@@ -1,27 +1,34 @@
 import React from "react"
-import {Col, Form} from "react-bootstrap"
+import {Alert, Col, Form} from "react-bootstrap"
 import SelectPageCount from "../../UI/SelectPageCount/SelectPageCount"
 import {connect} from "react-redux";
 import {
-  sortData
+  sortData, searchItem
 } from "../../Redux/Actions/filter"
 import {setCountOnPage} from '../../Redux/Actions/pages'
 import SearchField from "../../UI/SearchField/SearchField"
 import SortButton from "../../UI/SortButton/SortButton"
 import {
-  getProductCount,
-  getSortDirection
+  getProductCount, getSearchQuery,
+  getSortDirection, searchProduct
 } from "../../Redux/Selectors/selectors"
-import {searchItem} from "../../Redux/Actions/product";
+import SearchAlert from "../../UI/SearchAlert/SearchAlert";
+
 
 const SortControls = props => {
   return (
     <Form onSubmit={e => e.preventDefault()}>
-      <Form.Row className='mb-3'>
+      <Form.Row className='mb-1'>
         <Col xs={12} md={6}>
           <SearchField
             searchItem={props.searchItem}
-            searchRequest={props.searchRequest}
+            searchQuery={props.searchQuery}
+          />
+        </Col>
+        <Col xs={12} md={6}>
+          <SearchAlert
+            count={props.data.length}
+            query={props.searchQuery}
           />
         </Col>
       </Form.Row>
@@ -45,8 +52,8 @@ const SortControls = props => {
 const mapStateToProps = state => ({
   pageCount: getProductCount(state),
   sortDir: getSortDirection(state),
-
-  searchRequest: state.product.searchRequest,
+  searchQuery: getSearchQuery(state),
+  data: searchProduct(state)
 })
 export default connect(mapStateToProps,
   {setCountOnPage, searchItem, sortData})(SortControls)

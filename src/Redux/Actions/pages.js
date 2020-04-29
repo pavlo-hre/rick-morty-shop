@@ -5,14 +5,10 @@ export const setCurrentPage = page => ({
   payload: page
 })
 
-export const setCountOnPage = count => (dispatch, getState) => {
-  const productsCount = getState().product.data.length
-  const pages = productsCount
-    ? Math.ceil(productsCount / count)
-    : 1
+export const setCountOnPage = count => dispatch => {
   dispatch({
     type: SET_COUNT_ON_PAGE,
-    payload: {count, pages}
+    payload: count
   })
   dispatch(setCurrentPage(1))
 }
