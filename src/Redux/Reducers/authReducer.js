@@ -15,6 +15,7 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
+
     case AUTH_SUCCESS:
       return {
         ...state,
@@ -23,6 +24,7 @@ export const authReducer = (state = initialState, action) => {
         error: null,
         expirationDate: action.expDate
       }
+
     case AUTH_LOGOUT:
       return {
         ...state,
@@ -31,18 +33,22 @@ export const authReducer = (state = initialState, action) => {
         error: null,
         expirationDate: null
       }
+
     case AUTH_ERROR:
       return {
         ...state, error: action.error
       }
+
     case OPEN_AUTH_MODAL:
       return {
         ...state, isModalOpen: true
       }
+
     case CLOSE_AUTH_MODAL:
       return {
         ...state, isModalOpen: false
       }
+
     default:
       return state
   }

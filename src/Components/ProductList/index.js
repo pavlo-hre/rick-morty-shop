@@ -1,24 +1,29 @@
 import React from "react"
-import {Col, Container, Row} from "react-bootstrap"
+import {Col, Container, Form, Row} from "react-bootstrap"
 import CardItem from "./Blocks/CardItem"
 import {addToCart} from "Redux/Actions/cart"
 import {connect} from "react-redux"
 import {Loader} from "UI/Loader/Loader"
 import PaginationList from "../../UI/Pagination/Pagination"
 
-import SortControls from "../SortControls/SortControls";
-import SideBarFilter from "../SideBarFilter/SideBarFilter";
+import SortControls from "../SortControls/SortControls"
+import SideBarFilter from "../SideBarFilter/SideBarFilter"
 
 import {
-  getActivePage, getIsLoading, getOrders, getPageData, getPages, searchProduct
+  getActivePage,
+  getIsLoading,
+  getOrders,
+  getPageData,
+  getPages,
+  getProductCount,
+  searchProduct
 } from "../../Redux/Selectors/selectors"
-import {setCurrentPage} from "../../Redux/Actions/pages"
-import {logOut} from "../../Redux/Actions/auth";
-import SelectPageCount from "../../UI/SelectPageCount/SelectPageCount";
+import {setCountOnPage, setCurrentPage} from "../../Redux/Actions/pages"
+import SelectPageCount from "../../UI/SelectPageCount/SelectPageCount"
+import {getProductsInCart} from "../../Helpers/cartHelper"
+
 
 const Product = props => {
-
-  const getProductsInCart = (cartData, product) => cartData.some(el => el.id === product.id)
 
   const renderCards = (el, i, orders) => {
     return <Col key={el.id}>
@@ -39,23 +44,28 @@ const Product = props => {
         :
         <>
           <Row>
-            <Col md={2}>
+            <Col md={3} lg={2}>
               <SideBarFilter/>
             </Col>
-            <Col md={10}>
+            <Col md={9} lg={10}>
               <SortControls/>
               <Row xs={1} md={2} lg={3} xl={4}>
                 {props.data.map((el, i) => renderCards(el, i, props.orders))}
               </Row>
               {
-                props.allData.length
+                props.allData.length > props.count
                   ?
                   <Row>
-                    <Col>
+                    <Col xs={9} md={10}>
                       <PaginationList
                         activePage={props.activePage}
                         setActivePage={props.setCurrentPage}
                         pages={props.pages}
+                      />
+                    </Col>
+                    <Col xs={3} md={2}>
+                      <SelectPageCount
+                        onSelect={props.setCountOnPage}
                       />
                     </Col>
                   </Row>
@@ -77,12 +87,10 @@ const mapStateToProps = state => ({
   orders: getOrders(state),
   loading: getIsLoading(state),
   allData: searchProduct(state),
-
-  reqResData: state.product.data,
-  searchRequest: state.product.searchRequest
+  count: getProductCount(state)
 })
 
-const mapDispatchToProps = {setCurrentPage, addToCart}
+const mapDispatchToProps = {setCurrentPage, addToCart, setCountOnPage}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product)
 

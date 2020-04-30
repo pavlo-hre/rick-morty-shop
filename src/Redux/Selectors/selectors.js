@@ -1,7 +1,8 @@
 import {createSelector} from "reselect"
-import {filterData} from "../../Helpers/filterHelper";
+import {filterData} from "../../Helpers/filterHelper"
 
 export const getProducts = state => state.product.data
+export const getSelectedProduct = state => state.product.selected
 export const getIsLoading = state => state.product.isLoading
 export const getOrders = state => state.cart.orders
 export const getAuthData = state => state.auth
@@ -10,6 +11,7 @@ export const getSearchQuery = state => state.filter.searchQuery
 export const getActivePage = state => state.pages.activePage
 export const getProductCount = state => state.pages.pageCount
 export const getFilterSettings = state => state.filter.param
+
 
 const getSortProducts = createSelector([getProducts, getSortDirection],
   (products, sortDir) => {
@@ -27,12 +29,12 @@ const getSortProducts = createSelector([getProducts, getSortDirection],
 
 export const searchProduct = createSelector([getSortProducts, getSearchQuery, getFilterSettings],
   (products, value, filter) => {
-  let resultData = products
+    let resultData = products
     if (value) {
       const reg = new RegExp(`\\b(${value.trim()}\\w*)`, 'i')
-      resultData =  products.filter(item => reg.test(item.name))
+      resultData = products.filter(item => reg.test(item.name))
     }
-    if(filter){
+    if (filter) {
       resultData = filterData(resultData, filter)
     }
     return resultData

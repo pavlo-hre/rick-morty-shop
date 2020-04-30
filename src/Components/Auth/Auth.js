@@ -8,12 +8,12 @@ import {getAuthData} from "../../Redux/Selectors/selectors"
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email')
-    .required('Required'),
+    .email('Введите Ваш e-mail!')
+    .required('Поле должно быть заполнено!'),
   password: Yup.string()
-    .min(7, 'Too Short!')
-    .max(20, 'Too Long!')
-    .required('Required'),
+    .min(7, 'Минимальная длина пароля 7 символов!')
+    .max(20, 'Максимальная длина пароля 20 символов!')
+    .required('Поле должно быть заполнено!'),
 })
 
 const AuthForm = props => {
@@ -35,6 +35,7 @@ const AuthForm = props => {
             handleChange,
             values,
             errors,
+            touched,
           }) => (
           <Form noValidate onSubmit={handleSubmit}>
             {props.isLogin
@@ -64,7 +65,7 @@ const AuthForm = props => {
                 name="email"
                 value={values.email}
                 onChange={handleChange}
-                isInvalid={!!errors.email}
+                isInvalid={!!errors.email && touched.email}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.email}
@@ -78,7 +79,7 @@ const AuthForm = props => {
                 name="password"
                 value={values.password}
                 onChange={handleChange}
-                isInvalid={!!errors.password}
+                isInvalid={!!errors.password && touched.password}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.password}

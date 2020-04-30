@@ -7,7 +7,7 @@ const SearchAlert = ({count, query, filter}) => (
     <Alert
       variant={count ? 'success' : 'danger'}
       className='mb-0 px-2 py-1'
-      style={{minHeight: 40}}
+      style={{minHeight: 38, lineHeight: '30px'}}
     >
       {
         count

@@ -7,12 +7,6 @@ const PaginationList = props => {
 
   return (
     <Pagination>
-      <Pagination.First
-        disabled={activePage === 1 ? true : false}
-        onClick={() => {
-          setActivePage(1)
-        }}
-      />
       <Pagination.Prev
         disabled={activePage === 1 ? true : false}
         onClick={() => {
@@ -25,8 +19,6 @@ const PaginationList = props => {
               return <Pagination.Item active key={page}>{page}</Pagination.Item>
             }
             if (page === activePage - 1
-              || page === activePage + 2
-              || page === activePage - 2
               || page === activePage + 1
               || page === 1
               || page === pages) {
@@ -36,7 +28,7 @@ const PaginationList = props => {
               >{page}
               </Pagination.Item>
             }
-            if (page === activePage - 3 || page === activePage + 3) {
+            if (page === activePage - 2 || page === activePage + 2) {
               return <Pagination.Ellipsis key={page}/>
             }
           })
@@ -44,12 +36,6 @@ const PaginationList = props => {
       <Pagination.Next
         onClick={() => {
           setActivePage(activePage + 1)
-        }}
-        disabled={activePage === pages ? true : false}
-      />
-      <Pagination.Last
-        onClick={() => {
-          setActivePage(pages)
         }}
         disabled={activePage === pages ? true : false}
       />

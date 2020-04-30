@@ -21,3 +21,7 @@ export const getOrderData = (data, order, type) => {
   if (type === 'add') return [...data, {...order, count: 1}]
 }
 
+
+export const getProductsInCart = (cartData, product) => {
+  return cartData.some(el => el.id === product.id)
+}

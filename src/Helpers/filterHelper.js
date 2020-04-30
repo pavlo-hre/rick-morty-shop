@@ -17,13 +17,9 @@ export const createFilter = (filterSettings, name, value) => {
         return {...filter}
       }
       return {...filter, [name]: filterParams}
-    } else {
-      return {...filter, [name]: [...filter[name], value]}
-    }
-  } else {
-    return {
-      ...filter,
-      [name]: [value]
-    }
+    } else return {...filter, [name]: [...filter[name], value]}
+  } else return {
+    ...filter,
+    [name]: [value]
   }
 }

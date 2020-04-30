@@ -11,7 +11,7 @@ const SelectPageCount = props => {
       <Form.Control
         onChange={onSelect}
         as="select"
-        style={{minWidth: 70, width: '100%'}}
+        style={{minWidth: 65, width: '100%'}}
       >
         <option value={12}>12</option>
         <option value={24}>24</option>

@@ -13,8 +13,8 @@ const SideBarFilter = ({filterData, resetFilters, filter}) => {
     "Mytholog", "Animal", "Vampire", "Robot", "Cronenberg", "Disease", "Parasite"
   ]
 
-  const renderCheckbox = (filters, name) => filters.map((item, index) => (
-    <div
+  const renderCheckbox = (filters, name) => filters.map((item, index) => {
+    return <div
       key={item + index}
       className="custom-control custom-checkbox">
       <input
@@ -23,7 +23,8 @@ const SideBarFilter = ({filterData, resetFilters, filter}) => {
         id={item + index}
         value={item}
         name={name}
-        onInput={e => {
+        checked={filter && name in filter ? filter[name].includes(item) : false}
+        onChange={e => {
           filterData({name: e.target.name, value: e.target.value})
         }}
       />
@@ -34,7 +35,7 @@ const SideBarFilter = ({filterData, resetFilters, filter}) => {
         {item}
       </label>
     </div>
-  ))
+  })
 
   return (
     <Form>
@@ -50,14 +51,17 @@ const SideBarFilter = ({filterData, resetFilters, filter}) => {
         <legend>Species</legend>
         {renderCheckbox(species, 'species')}
       </fieldset>
-      <Button
-        type='reset'
-        variant='outline-danger'
-        className='mt-2'
-        onClick={resetFilters}
-      >
-        Сбросить фильтр
-      </Button>
+      {
+        filter
+        &&
+        <Button
+          variant='outline-danger'
+          className='mt-2'
+          onClick={resetFilters}
+        >
+          Сбросить фильтр
+        </Button>
+      }
     </Form>
   )
 }

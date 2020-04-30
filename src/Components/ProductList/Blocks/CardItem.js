@@ -17,18 +17,17 @@ const CardItem = ({card, onAddHandler, isProductInCart}) => {
         <Card.Img variant="top" src={card.image} onClick={onClickFlip}/>
         <Badge variant="danger">Price: {card.price}</Badge>
         <Card.Body
-          className='d-flex justify-content-between flex-column text-center'>
+          className='d-flex justify-content-between flex-column text-center pt-2'>
           <Link
             to={`/product/${card.id}`}
           >
             <Card.Title className='text-white'>{card.name}</Card.Title>
-
-            Status: <strong>{card.status}</strong><br/>
-            Gender: <strong>{card.gender}</strong><br/>
-            Species: <strong>{card.species}</strong>
-
-
           </Link>
+          <Card.Text style={{color: '#fff'}} className='text-left'>
+            Status:<strong> {card.status}</strong><br/>
+            Species:<strong> {card.species}</strong>
+          </Card.Text>
+
           {isProductInCart
             ? <Link
               to='/cart'
