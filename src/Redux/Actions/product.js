@@ -1,57 +1,40 @@
-import axios from "axios"
 import {
-  ADD_TO_CART,
-  DEC_CART_ITEM,
   FETCH_DATA_ERROR,
   FETCH_DATA_START,
   FETCH_DATA_SUCCES,
-  REMOVE_CART_ITEM,
   SELECT_ITEM,
 } from "./actionTypes"
+import {apiFetch} from "../../Helpers/apiFetch"
+import {setCountOnPage} from "./pages"
 
 const fetchStart = () => ({
   type: FETCH_DATA_START
-})
-const fetchSuccess = data => ({
-  type: FETCH_DATA_SUCCES,
-  data
 })
 const fetchError = error => ({
   type: FETCH_DATA_ERROR,
   error
 })
 
-export const setSelected = id => ({
-  type: SELECT_ITEM,
-  id
-})
-
-
-export const fetchData = () => async dispatch => {
+export const fetchData = () => async (dispatch, getState) => {
+  dispatch(fetchStart())
   try {
-    dispatch(fetchStart())
-    const {data} = await axios
-      .get(`https://rick-morty-3c452.firebaseio.com/heroes.json`)
-    const resData = data['-M4xVrbL-y6KiL0uMOiM']
-    dispatch(fetchSuccess(resData))
+    const data = await apiFetch()
+    dispatch({
+      type: FETCH_DATA_SUCCES,
+      payload: data
+    })
   } catch (e) {
-    dispatch(fetchError(e))
+    dispatch(fetchError(e.message))
     console.log(e)
   }
+  dispatch(setCountOnPage(12))
 }
 
-export const addToCart = order => ({
-  type: ADD_TO_CART,
-  order
+export const setSelected = id => ({
+  type: SELECT_ITEM,
+  payload: id
 })
 
-export const decCart = order => ({
-  type: DEC_CART_ITEM,
-  order
-})
 
-export const removeFromCart = order => ({
-  type: REMOVE_CART_ITEM,
-  order
-})
+
 

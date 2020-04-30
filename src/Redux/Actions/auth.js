@@ -4,7 +4,7 @@ import {
   AUTH_LOGOUT,
   AUTH_SUCCESS,
   CLOSE_AUTH_MODAL,
-  OPEN_AUTH_MODAL
+  OPEN_AUTH_MODAL, RESET_CART
 } from "./actionTypes"
 
 const authSuccess = (token, user, expDate) => ({
@@ -26,13 +26,28 @@ export const closeAuthModal = () => ({
   type: CLOSE_AUTH_MODAL
 })
 
-export const logOut = () => {
-  return {
-    type: AUTH_LOGOUT
-  }
-}
+export const logOut = () => ({
+  type: AUTH_LOGOUT
+})
+
+
 const autoLogOut = time => dispatch => {
   setTimeout(() => dispatch(logOut()), time * 1000)
+}
+
+export const checkAuth = () => (dispatch, getState) => {
+  const token = getState().auth.token
+  const expirationDate = getState().auth.expirationDate
+  if (!token) {
+    dispatch(logOut())
+  } else {
+    const expDate = new Date(expirationDate)
+    if (expDate <= new Date()) {
+      dispatch(logOut())
+    } else {
+      dispatch(autoLogOut((expDate.getTime() - new Date().getTime()) / 1000))
+    }
+  }
 }
 
 export const auth = (email, password, userName, isLogin) => async (dispatch) => {

@@ -4,16 +4,17 @@ import {Formik} from 'formik'
 import * as Yup from 'yup'
 import {auth} from "Redux/Actions/auth"
 import {connect} from "react-redux"
+import {getAuthData} from "../../Redux/Selectors/selectors"
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email')
-    .required('Required'),
+    .email('Введите Ваш e-mail!')
+    .required('Поле должно быть заполнено!'),
   password: Yup.string()
-    .min(7, 'Too Short!')
-    .max(20, 'Too Long!')
-    .required('Required'),
-});
+    .min(7, 'Минимальная длина пароля 7 символов!')
+    .max(20, 'Максимальная длина пароля 20 символов!')
+    .required('Поле должно быть заполнено!'),
+})
 
 const AuthForm = props => {
   return (
@@ -34,6 +35,7 @@ const AuthForm = props => {
             handleChange,
             values,
             errors,
+            touched,
           }) => (
           <Form noValidate onSubmit={handleSubmit}>
             {props.isLogin
@@ -41,10 +43,10 @@ const AuthForm = props => {
               null
               :
               <Form.Group>
-                <Form.Label>Name</Form.Label>
+                <Form.Label>Имя пользователя</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder="Введите ваше имя"
                   name="userName"
                   value={values.userName}
                   onChange={handleChange}
@@ -56,28 +58,28 @@ const AuthForm = props => {
               </Form.Group>
             }
             <Form.Group>
-              <Form.Label>Login</Form.Label>
+              <Form.Label>E-mail</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Введите ваш email"
                 name="email"
                 value={values.email}
                 onChange={handleChange}
-                isInvalid={!!errors.email}
+                isInvalid={!!errors.email && touched.email}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.email}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Пароль</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Enter password"
+                placeholder="Введите пароль"
                 name="password"
                 value={values.password}
                 onChange={handleChange}
-                isInvalid={!!errors.password}
+                isInvalid={!!errors.password && touched.password}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.password}
@@ -93,7 +95,7 @@ const AuthForm = props => {
             <Button
               type="submit"
               variant='success'
-            >Log in</Button>
+            >Войти</Button>
           </Form>
         )}
       </Formik>
@@ -101,7 +103,7 @@ const AuthForm = props => {
   )
 }
 const mapStateToProps = state => ({
-  errorMessage: state.auth.error
+  errorMessage: getAuthData(state).error
 })
 
 export default connect(mapStateToProps, {auth})(AuthForm)

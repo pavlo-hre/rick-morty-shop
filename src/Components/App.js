@@ -14,14 +14,17 @@ import Cart from "./Cart/Cart"
 import MyModal from "UI/Modal/Modal"
 import {closeAuthModal, openAuthModal} from "Redux/Actions/auth"
 import AuthFormTab from "./Auth/Tabs"
+import {checkAuth} from "../Redux/Actions/auth"
+import News from "./News/News"
+
 
 
 const App = props => {
 
   useEffect(() => {
     props.fetchData()
+    props.checkAuth()
   }, [])
-
 
   return (
     <Router>
@@ -32,28 +35,31 @@ const App = props => {
         <MyModal
           show={props.authModalShow}
           onHide={props.closeAuthModal}
-          modaltitle='Log in'
+          modaltitle='Авторизация'
         >
           <AuthFormTab/>
         </MyModal>
-        <Switch>
-          <Route path='/' exact>
-            <ProductList/>
-          </Route>
-          <Route path='/product/:id' component={ProductDetails}/>
-          <Route path='/news'/>
-          <Route path='/cart' component={Cart}/>
-        </Switch>
+          <Switch>
+            <Route path='/' exact>
+              <ProductList/>
+            </Route>
+            <Route path='/product/:id' component={ProductDetails}/>
+            <Route path='/news' component={News}/>
+            <Route path='/cart' component={Cart}/>
+          </Switch>
       </Container>
     </Router>
   );
 }
+
 const mapStateToProps = state => ({
-  cartData: state.product.cart.orders,
   authModalShow: state.auth.isModalOpen
 })
-export default connect(mapStateToProps, {
+
+const mapDispatchToProps = {
   fetchData,
   openAuthModal,
   closeAuthModal,
-})(App)
+  checkAuth,
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)

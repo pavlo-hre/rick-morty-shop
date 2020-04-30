@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button"
 import {Badge, ListGroup} from "react-bootstrap"
 import {Link} from "react-router-dom"
 
-const CardItem = ({card, onAddHandler}) => {
+const CardItem = ({card, onAddHandler, isProductInCart}) => {
   const [isFlipped, changeFlipped] = useState(false)
   const onClickFlip = () => {
     changeFlipped(!isFlipped)
@@ -17,22 +17,27 @@ const CardItem = ({card, onAddHandler}) => {
         <Card.Img variant="top" src={card.image} onClick={onClickFlip}/>
         <Badge variant="danger">Price: {card.price}</Badge>
         <Card.Body
-          className='d-flex justify-content-between flex-column text-center'>
+          className='d-flex justify-content-between flex-column text-center pt-2'>
           <Link
             to={`/product/${card.id}`}
           >
             <Card.Title className='text-white'>{card.name}</Card.Title>
           </Link>
-          {card.inCart
+          <Card.Text style={{color: '#fff'}} className='text-left'>
+            Status:<strong> {card.status}</strong><br/>
+            Species:<strong> {card.species}</strong>
+          </Card.Text>
+
+          {isProductInCart
             ? <Link
               to='/cart'
               className='btn btn-warning'
-            >Go to Cart</Link>
+            >В корзине</Link>
             :
             <Button
               variant="success"
               onClick={() => onAddHandler(card)}
-            >Add to cart</Button>
+            >Купить</Button>
           }
         </Card.Body>
       </Card>

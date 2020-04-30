@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/lib/integration/react'
 import App from './Components/App'
 import './index.scss'
-import {store, persistor} from "./Redux"
+import {persistor, store} from "./Redux"
 import {Loader} from "./UI/Loader/Loader"
 
 
@@ -17,4 +17,4 @@ ReactDOM.render(
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
-);
+)

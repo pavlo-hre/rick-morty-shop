@@ -1,4 +1,8 @@
 import React, {useEffect} from "react"
+import {compose} from "redux"
+import {connect} from "react-redux"
+import {Link, withRouter} from "react-router-dom"
+
 import {
   Button,
   Card,
@@ -8,18 +12,23 @@ import {
   ListGroup,
   Row
 } from "react-bootstrap"
-import {connect} from "react-redux"
-import {Link, withRouter} from "react-router-dom"
-import {compose} from "redux"
-import {addToCart, setSelected} from "Redux/Actions/product"
+
+import {setSelected} from "Redux/Actions/product"
+import {addToCart} from "Redux/Actions/cart"
+import {
+  getOrders,
+  getProducts,
+  getSelectedProduct
+} from "Redux/Selectors/selectors"
+import {getProductsInCart} from "Helpers/cartHelper"
 
 
 const ProductDetails = props => {
-  const {detailInfo} = props
+  const {detailInfo, orders, data, setSelected, match, addToCart} = props
 
   useEffect(() => {
-    props.data.length && props.setSelected(+props.match.params.id)
-  }, [props.data])
+    data.length && setSelected(+match.params.id)
+  }, [data])
 
   return (
     <Container>
@@ -43,19 +52,23 @@ const ProductDetails = props => {
               <ListGroup.Item
                 variant="light">Price: <strong>{detailInfo.price}</strong></ListGroup.Item>
             </ListGroup>
-            {detailInfo.inCart
-              ? <Link
-                to='/cart'
-                className='btn btn-warning my-4 w-50 align-self-center'
-              >
-                Go to Cart
-              </Link>
-              :
-              <Button
-                variant="success"
-                className='my-4 w-50 align-self-center'
-                onClick={() => props.addToCart(detailInfo)}
-              >Add to cart</Button>
+            {
+              getProductsInCart(orders, detailInfo)
+                ?
+                <Link
+                  to='/cart'
+                  className='btn btn-warning my-4 w-50 align-self-center'
+                >
+                  Перейти в корзину
+                </Link>
+                :
+                <Button
+                  variant="success"
+                  className='my-4 w-50 align-self-center'
+                  onClick={() => addToCart(detailInfo)}
+                >
+                  Купить
+                </Button>
             }
           </Card>
         </Col>
@@ -63,11 +76,18 @@ const ProductDetails = props => {
     </Container>
   )
 }
-const mapStateToProps = store => ({
-  data: store.product.data,
-  detailInfo: store.product.selected,
+
+const mapStateToProps = state => ({
+  orders: getOrders(state),
+  data: getProducts(state),
+  detailInfo: getSelectedProduct(state),
 })
-export default compose(connect(mapStateToProps, {
-  addToCart,
-  setSelected
-}), withRouter)(ProductDetails)
+
+const mapDispatchToProps = {
+  setSelected,
+  addToCart
+}
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps), withRouter)
+(ProductDetails)

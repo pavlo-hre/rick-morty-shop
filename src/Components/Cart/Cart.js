@@ -1,24 +1,33 @@
 import React from "react"
 import {Button, Container, Jumbotron, Table} from 'react-bootstrap'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faPlus, faMinus, faTrash} from '@fortawesome/free-solid-svg-icons'
 import {connect} from "react-redux"
-import {
-  addToCart,
-  decCart,
-  removeFromCart, setSelected
-} from "Redux/Actions/product"
 import {Link} from "react-router-dom"
 
+import {
+  incCart,
+  decCart,
+  removeFromCart,
+  resetCart
+} from "Redux/Actions/cart"
+import {
+  getIsAuth,
+  getOrders,
+  getTotalCart
+} from "Redux/Selectors/selectors"
+import {openAuthModal} from "../../Redux/Actions/auth"
 
 const Cart = props => {
-  if (!props.cartData.orders.length) {
+  if (!props.orders.length) {
     return (<Container>
       <Jumbotron className='text-center'>
-        <h1>Cart is empty!</h1>
+        <h1>Корзина пуста!</h1>
         <p className='pt-3'>
           <Link
             className='btn btn-outline-primary'
             to='/'
-          >Back to catalog</Link>
+          >Вернуться в каталог</Link>
         </p>
       </Jumbotron>
     </Container>)
@@ -29,15 +38,15 @@ const Cart = props => {
         <thead>
         <tr className='text-center'>
           <th style={{width: '5%'}}>#</th>
-          <th style={{width: '60%'}}>Product</th>
-          <th style={{width: '5%'}}>Price</th>
-          <th style={{width: '10%'}}>Count</th>
-          <th style={{width: '5%'}}>Sum</th>
+          <th style={{width: '60%'}}>Товар</th>
+          <th style={{width: '5%'}}>Цена</th>
+          <th style={{width: '10%'}}>Количество</th>
+          <th style={{width: '5%'}}>Сумма</th>
           <th style={{width: '5%'}}></th>
         </tr>
         </thead>
         <tbody>
-        {props.cartData.orders.map((el, i) => {
+        {props.orders.map((el, i) => {
           return (
             <tr key={el.id}>
               <td>{i + 1}</td>
@@ -55,20 +64,26 @@ const Cart = props => {
                 <Button
                   variant='secondary'
                   onClick={() => props.decCart(el)}
-                  disabled={el.inCart === 1 && true}
-                >-</Button>
-                <span>{el.inCart}</span>
+                  disabled={el.count === 1}
+                >
+                  <FontAwesomeIcon icon={faMinus}/>
+                </Button>
+                <span>{el.count}</span>
                 <Button
                   variant='secondary'
-                  onClick={() => props.addToCart(el)}
-                >+</Button>
+                  onClick={() => props.incCart(el)}
+                >
+                  <FontAwesomeIcon icon={faPlus}/>
+                </Button>
               </td>
-              <td>{el.inCart * el.price}</td>
+              <td>{el.count * el.price}</td>
               <td className='text-center'>
                 <Button
                   variant='danger'
                   onClick={() => props.removeFromCart(el)}
-                >&times;</Button>
+                >
+                  <FontAwesomeIcon icon={faTrash}/>
+                </Button>
               </td>
             </tr>
           )
@@ -77,29 +92,44 @@ const Cart = props => {
         </tbody>
         <tfoot>
         <tr>
-          <td colSpan={3}>Total</td>
+          <td colSpan={3}>Всего</td>
           <td>
-            {props.cartData.orders.reduce((acc, el) => acc + el.inCart, 0)}
+            {props.orders.reduce((acc, el) => acc + el.count, 0)}
           </td>
-          <td>{props.cartData.total}</td>
+          <td>{props.total}</td>
         </tr>
         </tfoot>
       </Table>
       <div className='d-flex justify-content-end'>
         <Button
+          variant="danger"
+          className='mr-2'
+          onClick={props.resetCart}
+        >
+          Очистить корзину
+        </Button>
+        <Button
           variant="success"
-          className='px-5'
-        >Pay</Button></div>
+          onClick={props.isAuth ? null : props.openAuthModal}
+        >
+          Оформить заказ
+        </Button>
+      </div>
     </Container>
   )
 }
-const mapStateToProps = store => ({
-  cartData: store.product.cart
+const mapStateToProps = state => ({
+  orders: getOrders(state),
+  total: getTotalCart(state),
+  isAuth: getIsAuth(state)
 })
 
-export default connect(mapStateToProps, {
-  addToCart,
+const mapDispatchToProps = {
+  incCart,
   decCart,
   removeFromCart,
-  setSelected
-})(Cart)
+  resetCart,
+  openAuthModal
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
