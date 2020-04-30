@@ -15,7 +15,8 @@ import MyModal from "UI/Modal/Modal"
 import {closeAuthModal, openAuthModal} from "Redux/Actions/auth"
 import AuthFormTab from "./Auth/Tabs"
 import {checkAuth} from "../Redux/Actions/auth"
-import SideBarFilter from "./SideBarFilter/SideBarFilter";
+import News from "./News/News"
+
 
 
 const App = props => {
@@ -24,7 +25,6 @@ const App = props => {
     props.fetchData()
     props.checkAuth()
   }, [])
-
 
   return (
     <Router>
@@ -39,18 +39,19 @@ const App = props => {
         >
           <AuthFormTab/>
         </MyModal>
-        <Switch>
-          <Route path='/' exact>
-            <ProductList/>
-          </Route>
-          <Route path='/product/:id' component={ProductDetails}/>
-          <Route path='/news'/>
-          <Route path='/cart' component={Cart}/>
-        </Switch>
+          <Switch>
+            <Route path='/' exact>
+              <ProductList/>
+            </Route>
+            <Route path='/product/:id' component={ProductDetails}/>
+            <Route path='/news' component={News}/>
+            <Route path='/cart' component={Cart}/>
+          </Switch>
       </Container>
     </Router>
   );
 }
+
 const mapStateToProps = state => ({
   authModalShow: state.auth.isModalOpen
 })

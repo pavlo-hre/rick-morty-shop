@@ -11,6 +11,7 @@ export const getSearchQuery = state => state.filter.searchQuery
 export const getActivePage = state => state.pages.activePage
 export const getProductCount = state => state.pages.pageCount
 export const getFilterSettings = state => state.filter.param
+export const getIsAuth = state => !!state.auth.token
 
 
 const getSortProducts = createSelector([getProducts, getSortDirection],

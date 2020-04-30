@@ -1,5 +1,5 @@
 import React from "react"
-import {Col, Container, Form, Row} from "react-bootstrap"
+import {Col, Container, Row} from "react-bootstrap"
 import CardItem from "./Blocks/CardItem"
 import {addToCart} from "Redux/Actions/cart"
 import {connect} from "react-redux"
@@ -42,40 +42,38 @@ const Product = props => {
         ?
         <Loader/>
         :
-        <>
-          <Row>
-            <Col md={3} lg={2}>
-              <SideBarFilter/>
-            </Col>
-            <Col md={9} lg={10}>
-              <SortControls/>
-              <Row xs={1} md={2} lg={3} xl={4}>
-                {props.data.map((el, i) => renderCards(el, i, props.orders))}
-              </Row>
-              {
-                props.allData.length > props.count
-                  ?
-                  <Row>
-                    <Col xs={9} md={10}>
-                      <PaginationList
-                        activePage={props.activePage}
-                        setActivePage={props.setCurrentPage}
-                        pages={props.pages}
-                      />
-                    </Col>
-                    <Col xs={3} md={2}>
-                      <SelectPageCount
-                        onSelect={props.setCountOnPage}
-                      />
-                    </Col>
-                  </Row>
-                  :
-                  null
-              }
-            </Col>
-          </Row>
-
-        </>
+        <Row>
+          <Col md={3} lg={2}>
+            <SideBarFilter/>
+          </Col>
+          <Col md={9} lg={10}>
+            <SortControls/>
+            <Row xs={1} md={2} lg={3} xl={4}>
+              {props.data.map((el, i) => renderCards(el, i, props.orders))}
+            </Row>
+            {
+              props.allData.length > props.count
+                ?
+                <Row className='mb-5'>
+                  <Col xs={9} md={10}>
+                    <PaginationList
+                      activePage={props.activePage}
+                      setActivePage={props.setCurrentPage}
+                      pages={props.pages}
+                    />
+                  </Col>
+                  <Col xs={3} md={2}>
+                    <SelectPageCount
+                      onSelect={props.setCountOnPage}
+                      count={props.count}
+                    />
+                  </Col>
+                </Row>
+                :
+                null
+            }
+          </Col>
+        </Row>
       }
     </Container>
   )

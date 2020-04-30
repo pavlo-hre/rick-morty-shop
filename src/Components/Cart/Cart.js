@@ -11,8 +11,12 @@ import {
   removeFromCart,
   resetCart
 } from "Redux/Actions/cart"
-import {getOrders, getTotalCart} from "../../Redux/Selectors/selectors"
-
+import {
+  getIsAuth,
+  getOrders,
+  getTotalCart
+} from "Redux/Selectors/selectors"
+import {openAuthModal} from "../../Redux/Actions/auth"
 
 const Cart = props => {
   if (!props.orders.length) {
@@ -106,6 +110,7 @@ const Cart = props => {
         </Button>
         <Button
           variant="success"
+          onClick={props.isAuth ? null : props.openAuthModal}
         >
           Оформить заказ
         </Button>
@@ -115,14 +120,16 @@ const Cart = props => {
 }
 const mapStateToProps = state => ({
   orders: getOrders(state),
-  total: getTotalCart(state)
+  total: getTotalCart(state),
+  isAuth: getIsAuth(state)
 })
 
 const mapDispatchToProps = {
   incCart,
   decCart,
   removeFromCart,
-  resetCart
+  resetCart,
+  openAuthModal
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
