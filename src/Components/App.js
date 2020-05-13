@@ -16,6 +16,7 @@ import {closeAuthModal, openAuthModal} from "Redux/Actions/auth"
 import AuthFormTab from "./Auth/Tabs"
 import {checkAuth} from "../Redux/Actions/auth"
 import News from "./News/News"
+import Footer from '../UI/Footer/Footer';
 
 
 
@@ -28,7 +29,7 @@ const App = props => {
 
   return (
     <Router>
-      <Container fluid className='px-0'>
+      <Container fluid className='px-0 main-wrap' >
         <Menu
           modalOpen={props.openAuthModal}
           modalHide={props.closeAuthModal}/>
@@ -47,6 +48,7 @@ const App = props => {
             <Route path='/news' component={News}/>
             <Route path='/cart' component={Cart}/>
           </Switch>
+        <Footer/>
       </Container>
     </Router>
   );

@@ -1,8 +1,10 @@
-import React from "react"
+import React, {useState} from "react"
 import {Button, Form} from "react-bootstrap"
 import {filterData, resetFilters} from "../../Redux/Actions/filter"
 import {connect} from "react-redux"
 import {getFilterSettings} from "../../Redux/Selectors/selectors"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faFilter} from "@fortawesome/free-solid-svg-icons"
 
 
 const SideBarFilter = ({filterData, resetFilters, filter}) => {
@@ -12,6 +14,9 @@ const SideBarFilter = ({filterData, resetFilters, filter}) => {
   const species = ["Human", "Alien", "Humanoid", "unknown", "Poopybutthole",
     "Mytholog", "Animal", "Vampire", "Robot", "Cronenberg", "Disease", "Parasite"
   ]
+
+  const [isFilterOpen, setFilterOpen] = useState(false)
+  const cls = isFilterOpen?'filterFormOpen':'filterFormClosed'
 
   const renderCheckbox = (filters, name) => filters.map((item, index) => {
     return <div
@@ -37,32 +42,42 @@ const SideBarFilter = ({filterData, resetFilters, filter}) => {
     </div>
   })
 
+
   return (
-    <Form>
-      <fieldset>
-        <legend>Gender</legend>
-        {renderCheckbox(gender, 'gender')}
-      </fieldset>
-      <fieldset>
-        <legend>Status</legend>
-        {renderCheckbox(status, 'status')}
-      </fieldset>
-      <fieldset>
-        <legend>Species</legend>
-        {renderCheckbox(species, 'species')}
-      </fieldset>
-      {
-        filter
-        &&
-        <Button
-          variant='outline-danger'
-          className='mt-2'
-          onClick={resetFilters}
-        >
-          Сбросить фильтр
-        </Button>
-      }
-    </Form>
+    <>
+      <Button
+        className = 'openContol'
+        variant='secondary'
+        onClick={()=>setFilterOpen(!isFilterOpen)}
+      >
+        <FontAwesomeIcon icon={faFilter}/>
+      </Button>
+      <Form className={cls}>
+        <fieldset>
+          <legend>Gender</legend>
+          {renderCheckbox(gender, 'gender')}
+        </fieldset>
+        <fieldset>
+          <legend>Status</legend>
+          {renderCheckbox(status, 'status')}
+        </fieldset>
+        <fieldset>
+          <legend>Species</legend>
+          {renderCheckbox(species, 'species')}
+        </fieldset>
+        {
+          filter
+          &&
+          <Button
+            variant='outline-danger'
+            className='mt-2'
+            onClick={resetFilters}
+          >
+            Сбросить фильтр
+          </Button>
+        }
+      </Form>
+    </>
   )
 }
 

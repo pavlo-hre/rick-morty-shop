@@ -1,5 +1,21 @@
 @import "~bootstrap/scss/bootstrap";
 @import "Components/ProductList/Blocks/CardItem";
 @import "./Components/Menu/menu";
+@import "./Components/Cart/cart";
+@import "./Components/SideBarFilter/sideBarFilter";
 
 
+#root{
+  height: 100vh;
+}
+
+.main-wrap{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+footer{
+  margin-top: auto;
+  background-color: #343a40;
+  color: #fff;
+}

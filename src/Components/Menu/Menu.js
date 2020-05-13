@@ -20,11 +20,11 @@ const Menu = props => {
   }, [authData.token])
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className='mb-5 nav-menu '>
+    <Navbar bg="dark" variant="dark" expand="lg" className='mb-3 nav-menu '>
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <h2 className='navbar-brand ml-2'>
-          RICK AND MORTY SHOP
+          R&M
         </h2>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">

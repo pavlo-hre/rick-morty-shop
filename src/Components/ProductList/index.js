@@ -43,7 +43,7 @@ const Product = props => {
         <Loader/>
         :
         <Row>
-          <Col md={3} lg={2}>
+          <Col md={3} lg={2} className='mb-2'>
             <SideBarFilter/>
           </Col>
           <Col md={9} lg={10}>

@@ -5,8 +5,7 @@ import {faCopyright} from '@fortawesome/free-solid-svg-icons'
 
 const Footer = () => (
   <footer
-    style={{backgroundColor: '#343a40', color: '#fff'}}
-    className='py-4 footer'>
+    className='py-4'>
     <Container className='d-flex justify-content-center'>
       <div>
              <FontAwesomeIcon icon={faCopyright}/>
